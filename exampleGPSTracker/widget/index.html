@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- Load helper.css to use our helper classes.
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+	-->
+	
+	<!-- JS -->
+	<script src="../../../scripts/buildfire.js"></script>
+   
+ 	<!--
+    <script src="../../../../scripts/angular/angular.min.js"></script>
+    <script src="../../../../scripts/angular/ui-bootstrap.min.js"></script>
+
+    <script src="../../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+    -->
+</head>
+<body>
+<h1>GPS Tracker</h1>
+<div id="geolocation"></div>
+<script>
+	buildfire.geo.watchPosition(
+			{enableHighAccuracy:true,timeout:30000},
+			function (position) {
+					var element = document.getElementById('geolocation');
+					element.innerHTML += '<br/>Latitude: '  + position.coords.latitude
+							+ '<br/>Longitude: ' + position.coords.longitude ;
+
+			} );
+</script>
+</body>
+</html>
