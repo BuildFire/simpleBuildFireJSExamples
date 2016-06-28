@@ -19,6 +19,11 @@
 		</div>
 		<hr class="none">
 		<div class="item clearfix">
+			<button class="btn btn-primary stretch" onclick="send()">Send</button>
+			<p class="margin-top-five margin-bottom-zero small"><span id="outputSend"></span></p>
+		</div>
+		<hr class="none">
+		<div class="item clearfix">
 			<button class="btn btn-primary stretch" onclick="schedule()">Schedule</button>
 			<p class="margin-top-five margin-bottom-zero small"><span id="countDown"></span> <span id="outputS"></span></p>
 		</div>
@@ -26,6 +31,10 @@
 		<div class="item clearfix">
 			<button class="btn btn-warning stretch" onclick="cancel()">Cancel</button>
 			<p class="margin-top-five margin-bottom-zero small"><span id="outputC"></span></p>
+		</div>
+		<hr class="none">
+		<div class="item clearfix">
+			<p class="margin-top-five margin-bottom-zero small"><span id="dataResult"></span></p>
 		</div>
 	</div>
 </body>
@@ -54,6 +63,23 @@
 			var message = (permissionsGranted) ? "Permissions Granted" : "Permissions Rejected";
 
 			document.getElementById("outputPR").innerHTML = message;
+		});
+	}
+
+	function send(){
+		var options = {
+			title: (actionItem && actionItem.title ) ? actionItem.title : '',
+			text: bodyText,
+			data: actionItem,
+			returnToPluginInstanceId: '' //optional
+		};
+
+		buildfire.notifications.localNotification.send(options, function (err, data) {
+			notificationId = (data.id) ? data.id : null;
+
+			var notificationIdDisplay = notificationId || "";
+
+			document.getElementById("outputSend").innerHTML = "Sent Notification " + notificationIdDisplay;
 		});
 	}
 
@@ -101,7 +127,7 @@
 
 	//Handle notification onClick event
 	buildfire.notifications.localNotification.onClick = function(data){
-		alert(JSON.stringify(data));
+		document.getElementById("dataResult").innerHTML = "Data received: <br />" + JSON.stringify(data);
 	};
 
 </script>
