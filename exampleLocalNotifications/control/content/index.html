@@ -72,8 +72,8 @@
     }
 
     buildfire.datastore.get(function(err, obj){
-        document.getElementById("seconds").value = obj.data.secondsToWait;
-        document.getElementById("bodyText").value = obj.data.bodyText;
+        document.getElementById("seconds").value = (obj.data.secondsToWait) ? obj.data.secondsToWait : 10;
+        document.getElementById("bodyText").value = (obj.data.bodyText) ? obj.data.bodyText: "";
         _actionItem = obj.data.actionItem;
     })
 </script>
