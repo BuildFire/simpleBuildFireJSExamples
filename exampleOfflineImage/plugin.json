@@ -3,6 +3,7 @@
 ,"pluginName":"Offline Images Example"
 ,"pluginDescription":"Offline Images Example"
 ,"supportEmail":"[Your support Email]"
+,"offlineModeEnabled": true
 ,"control":{
   "content":{
     "enabled":true
