@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <!-- CSS -->
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+	
+	<!-- JS -->
+	<script src="../../../../scripts/buildfire.js"></script>
+   
+ 	<!--
+    <script src="../../../../scripts/angular/angular.min.js"></script>
+    <script src="../../../../scripts/angular/ui-bootstrap.min.js"></script>
+
+    <script src="../../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+    -->
+</head>
+<body>
+	<div class="item clearfix row">
+		<div class="col-xs-3 pull-left">
+			<span>Seconds Until Notification</span>
+		</div>
+		<div class="col-xs-9 pull-right">
+			<input type="text" value="10" id="seconds" class="form-control">
+		</div>
+	</div>
+	<hr class="none">
+	<div class="item clearfix row">
+		<div class="col-xs-3 pull-left">
+			<span>Group Name</span>
+		</div>
+		<div class="col-xs-9 pull-right">
+			<input type="text" id="groupName" class="form-control">
+		</div>
+	</div>
+	<hr class="none">
+	<div class="item clearfix row">
+		<div class="col-xs-3 pull-left">
+			<span>Notification Title</span>
+		</div>
+		<div class="col-xs-9 pull-right">
+			<input type="text" id="msgTitle" class="form-control">
+		</div>
+	</div>
+	<hr class="none">
+	<div class="item clearfix row">
+		<div class="col-xs-3 pull-left">
+			<span>Notification Body</span>
+		</div>
+		<div class="col-xs-9 pull-right">
+			<textarea class="form-control" id="msgBody"></textarea>
+		</div>
+	</div>
+	<hr class="none">
+	<div class="item clearfix row">
+		<div class="col-xs-3 pull-right">
+			<a class="btn btn-primary stretch" onclick="save()">Save</a>
+		</div>
+	</div>
+</body>
+<script>
+    function save() {
+        var obj = {
+            secondsToWait: parseInt(document.getElementById("seconds").value),
+            groupName: document.getElementById("groupName").value,
+            msgTitle: document.getElementById("msgTitle").value,
+            msgBody: document.getElementById("msgBody").value
+        };
+
+        buildfire.datastore.save(obj, function(){
+            console.log('saving data');
+        });
+    }
+
+    buildfire.datastore.get(function(err, obj){
+        document.getElementById("seconds").value = (obj.data.secondsToWait) ? obj.data.secondsToWait : 10;
+        document.getElementById("groupName").value = (obj.data.groupName) ? obj.data.groupName: "";
+        document.getElementById("msgTitle").value = (obj.data.msgTitle) ? obj.data.msgTitle: "";
+        document.getElementById("msgBody").value = (obj.data.msgBody) ? obj.data.msgBody: "";
+    })
+</script>
+</html>

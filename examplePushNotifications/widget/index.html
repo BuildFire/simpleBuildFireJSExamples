@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS -->
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+
+	<!-- JS -->
+	<script src="../../../scripts/buildfire.js"></script>
+	<script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
+
+</head>
+<body>
+	<div class="text-left padded margin-top-thirty">
+		<div class="item clearfix">
+			<button class="btn btn-success stretch" onclick="subscribe()">Subscribe</button>
+			<p class="margin-top-five margin-bottom-zero small"><span id="outputSC"></span></p>
+		</div>
+		<hr class="none">
+		<div class="item clearfix">
+			<button class="btn btn-primary stretch" onclick="unsubscribe()">Unsubscribe</button>
+			<p class="margin-top-five margin-bottom-zero small"><span id="outputUSC"></span></p>
+		</div>
+		<hr class="none">
+		<div class="item clearfix">
+			<button class="btn btn-primary stretch" onclick="schedule()">Send notification to all subscribers</button>
+			<p class="margin-top-five margin-bottom-zero small"><span id="countDown"></span> <span id="outputS"></span></p>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+    var secondsToWait, groupName , msgTitle, msgBody;
+
+    buildfire.datastore.onUpdate(function(obj){
+        parseData(obj.data);
+    });
+
+    function parseData(data){
+        if(!data) return;
+        secondsToWait = (data.secondsToWait) ? data.secondsToWait : 10;
+        groupName = (data.groupName) ? data.groupName : '';
+        msgTitle = (data.msgTitle) ? data.msgTitle : 'Sample Title';
+        msgBody = (data.msgBody) ? data.msgBody : 'Sample Body Text';
+    }
+
+    buildfire.datastore.get(function(err, obj){
+        parseData(obj.data);
+    });
+
+	function subscribe(){
+	    // if you don't specify the groupName, it will subscribe to default group for the plugin
+        buildfire.notifications.pushNotification.subscribe({
+            groupName : groupName
+		},function (err,result) {
+            var message = (result) ? "Subscribed Successfully" : err;
+
+            document.getElementById("outputSC").innerHTML = message;
+
+            setTimeout(function () {
+                document.getElementById("outputSC").innerHTML = "";
+            },3000);
+        });
+	}
+
+	function unsubscribe(){
+        // if you don't specify the groupName, it will unsubscribe to default group for the plugin.
+        buildfire.notifications.pushNotification.unsubscribe({
+            groupName : groupName
+        },function (err,result) {
+            var message = (result) ? "Unsubscribed Successfully" : err;
+
+            document.getElementById("outputUSC").innerHTML = message;
+
+            setTimeout(function () {
+                document.getElementById("outputUSC").innerHTML = "";
+            },3000);
+        });
+	}
+
+	function schedule(){
+        var countDown = secondsToWait;
+        var sendTime = new Date();
+        sendTime.setSeconds(sendTime.getSeconds() + secondsToWait);
+		// "groupName" & "at" params are optional
+        // if you don't specify the groupName, it will send to all subscribers in the default group
+		// "at" params used to specify when to send the notification. By Default = new Date()
+		var options = {
+			title: msgTitle,
+			text: msgBody,
+			at: sendTime,
+            groupName: groupName
+		};
+
+		buildfire.notifications.pushNotification.schedule(options, function (err, data) {
+		    if(err){
+                document.getElementById("outputS").innerHTML = "Error in sending the notification";
+			}else{
+                var notificationId = (data.notificationId) ? data.notificationId : null;
+                document.getElementById("outputS").innerHTML = "Scheduled Notification " + (notificationId || "");
+			}
+            setTimeout(function () {
+                document.getElementById("outputS").innerHTML = "";
+            },3000);
+		});
+
+		document.getElementById("countDown").innerHTML = countDown;
+		countDown = countDown - 1;
+
+		intervalId = setInterval(function(){
+			document.getElementById("countDown").innerHTML = countDown;
+			countDown = countDown - 1;
+
+			if(countDown < 0){
+				clearInterval(intervalId);
+                document.getElementById("countDown").innerHTML = '';
+			}
+
+		}, 1000);
+	}
+</script>
+</html>
