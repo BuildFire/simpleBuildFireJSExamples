@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+        NOTE:
+        1. You can reference the file in SDK via relative path
+        2. The Control and Widget Should NOT share resources. Only the Widget folder will make it to the device
+        3. You may include any JS framework you want with your Widget and Control folders. However, keep in mind
+            to keep you plugin as light weight as possible for performance and transport reasons
+    -->
+
+    <!-- You can load helper.css to use our helper classes.
+    <link href="../../../../styles/helper.css" rel="stylesheet">
+    -->
+
+    <!-- JS -->
+    <script src="../../../scripts/buildfire.min.js"></script>
+    <script src="../../../scripts/buildfire/services/firebase/firebase.js"></script>
+
+    <!--
+   <script src="../../../../scripts/angular/angular.min.js"></script>
+   <script src="../../../../scripts/angular/ui-bootstrap.min.js"></script>
+
+   <script src="../../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+   -->
+</head>
+<body class="text-center">
+<h1>Firebase integration</h1>
+<div class="container">
+    <div class="row">
+        <button id="loginBtn" type="button" class="btn btn-primary" onclick="loginBuildfire()">Login</button>
+    </div>
+    <br/>
+    <div id="loading" class="hidden text-primary">
+        loading ....
+    </div>
+    <br/>
+    <div id="custom-token-container" class="hidden">
+        You are now Logged in to firebase
+        <br/>
+        <br/>
+        <div>
+            <label>Firebase Custom Token:</label>
+            <span id="custom-token">
+
+            </span>
+        </div>
+    </div>
+</div>
+<script>
+    function loginBuildfire() {
+        document.getElementById('custom-token').innerHTML = "";
+        document.getElementById('custom-token-container').classList.add('hidden');
+
+        buildfire.auth.login(null, function (err, result) {
+            if (err) {
+                console.error("Login to buildfire", err);
+            }
+            else {
+                //show loading
+                document.getElementById('loading').classList.remove('hidden');
+
+                _loginToFirebase();
+            }
+        });
+    };
+
+    function _loginToFirebase() {
+        /*
+        * You will find the integration token in Developer Portal Site, under Integrations Page
+        * */
+        var _integrationToken = "your-integration-token";
+        buildfire.services.firebase.createCustomToken({integrationToken: _integrationToken}, function (err, result) {
+            //hide loading
+            document.getElementById('loading').classList.add('hidden');
+            if (err) {
+            }
+            else if (result) {
+                document.getElementById('custom-token').innerHTML = result.customToken;
+            }
+            document.getElementById('custom-token-container').classList.remove('hidden');
+        });
+    };
+</script>
+</body>
+</html>

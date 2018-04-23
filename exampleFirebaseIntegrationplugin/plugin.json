@@ -1,0 +1,22 @@
+{
+  "author":"Ahmad Hamed"
+,"pluginName":"Firebase 1212 1212 1212"
+,"pluginDescription":"A sample code to show how to integrate with google firebase using buildfire sdk"
+,"supportEmail":"devSupport@buildfire.com"
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+  "features" : [],
+  "languages" : ["en"]
+}
