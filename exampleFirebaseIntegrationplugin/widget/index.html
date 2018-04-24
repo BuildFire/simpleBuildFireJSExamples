@@ -59,10 +59,12 @@
                 console.error("Login to buildfire", err);
             }
             else {
-                //show loading
-                document.getElementById('loading').classList.remove('hidden');
+                if(result) {
+                    //show loading
+                    document.getElementById('loading').classList.remove('hidden');
 
-                _loginToFirebase();
+                    _loginToFirebase();
+                }
             }
         });
     };
