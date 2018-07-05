@@ -37,29 +37,32 @@
         loading ....
     </div>
     <br/>
-    <div id="custom-token-container" class="hidden">
-        You are now Logged in to firebase
-        <br/>
-        <br/>
-        <div>
-            <label>Firebase Custom Token:</label>
-            <span id="custom-token">
-
-            </span>
+    <div id="custom-token-container">
+        <div id="error-message" class="hidden"></div>
+        <div id="firebase-success" class="hidden">
+            You are now Logged in to firebase
+            <br/>
+            <br/>
+            <div>
+                <label>Firebase Custom Token:</label>
+                <span id="custom-token">
+                </span>
+            </div>
         </div>
     </div>
 </div>
 <script>
     function loginBuildfire() {
         document.getElementById('custom-token').innerHTML = "";
-        document.getElementById('custom-token-container').classList.add('hidden');
+        document.getElementById('error-message').classList.add('hidden');
+        document.getElementById('firebase-success').classList.add('hidden');
 
         buildfire.auth.login(null, function (err, result) {
             if (err) {
                 console.error("Login to buildfire", err);
             }
             else {
-                if(result) {
+                if (result) {
                     //show loading
                     document.getElementById('loading').classList.remove('hidden');
 
@@ -78,11 +81,13 @@
             //hide loading
             document.getElementById('loading').classList.add('hidden');
             if (err) {
+                document.getElementById('error-message').innerHTML = err.message;
+                document.getElementById('error-message').classList.remove('hidden');
             }
             else if (result) {
                 document.getElementById('custom-token').innerHTML = result.customToken;
+                document.getElementById('firebase-success').classList.remove('hidden');
             }
-            document.getElementById('custom-token-container').classList.remove('hidden');
         });
     };
 </script>
