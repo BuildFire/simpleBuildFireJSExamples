@@ -1,0 +1,22 @@
+{
+  "author":"Ahnad Hamed"
+,"pluginName":"Register Plugin Events"
+,"pluginDescription":"This plugin is used to show how to register and track plugin events."
+,"supportEmail":""
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+  "features" : [],
+  "languages" : ["en"]
+}
