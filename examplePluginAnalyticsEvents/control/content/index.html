@@ -36,30 +36,89 @@
             });
         }
 
-        registerEvent('Contact Us', 'contact_us', 'Customers who clicked on Contact Us');
-        registerEvent('Purchase', 'purchase', 'Customers who clicked on Purchase');
-        registerEvent('Add To Cart', 'add_to_cart', 'Customers who clicked on Add To Cart');
-        registerEvent('Help', 'help', 'Customers who clicked on Help');
+        function unregisterEvent(key) {
+            buildfire.analytics.unregisterEvent(key);
+        }
+
+        function registerEvents(name, key, description, $this) {
+            registerEvent(name, key, description);
+            $this.querySelector('.loading').classList.remove('hidden');
+            setTimeout(function () {
+                $this.querySelector('.loading').classList.add('hidden');
+            }, 1000);
+        }
+
+        function unregisterEvents(key, $this) {
+            unregisterEvent(key);
+            $this.querySelector('.loading').classList.remove('hidden');
+            setTimeout(function () {
+                $this.querySelector('.loading').classList.add('hidden');
+            }, 1000);
+        }
+
     </script>
 </head>
 <body>
-
 <div class="container">
-    <h4>Registered Events</h4>
+    <h4>Plugin Events</h4>
     <div class="row">
         <div class="col-md-12">
             <ul class="list-group">
                 <li class="list-group-item">
                     Contact Us
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="registerEvents('Contact Us', 'contact_us', 'Customers who clicked on Contact Us',this)">
+                            Register
+                            Events <span
+                                class="badge loading hidden">Processing</span></button>
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="unregisterEvents('contact_us',this)">Unregister
+                            Events <span
+                                    class="badge loading hidden">Processing</span></button>
+                    </div>
                 </li>
                 <li class="list-group-item">
                     Purchase
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="registerEvents('Purchase', 'purchase', 'Customers who clicked on Purchase',this)">
+                            Register
+                            Events <span
+                                class="badge loading hidden">Processing</span></button>
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="unregisterEvents('purchase',this)">Unregister
+                            Events <span
+                                    class="badge loading hidden">Processing</span></button>
+                    </div>
                 </li>
                 <li class="list-group-item">
                     Add To Cart
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="registerEvents('Add To Cart', 'add_to_cart', 'Customers who clicked on Add To Cart',this)">
+                            Register
+                            Events <span
+                                class="badge loading hidden">Processing</span></button>
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="unregisterEvents('add_to_cart',this)">Unregister
+                            Events <span
+                                    class="badge loading hidden">Processing</span></button>
+                    </div>
                 </li>
                 <li class="list-group-item">
                     Help
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="registerEvents('Help', 'help', 'Customers who clicked on Help',this)">
+                            Register
+                            Events <span
+                                class="badge loading hidden">Processing</span></button>
+                        <button type="button" class="btn btn-xs btn-primary"
+                                onclick="unregisterEvents('help',this)">Unregister
+                            Events <span
+                                    class="badge loading hidden">Processing</span></button>
+                    </div>
                 </li>
             </ul>
         </div>
