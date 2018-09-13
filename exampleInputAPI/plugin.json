@@ -1,0 +1,22 @@
+{
+  "author":"Alex Cavazos"
+,"pluginName":"Input API Test"
+,"pluginDescription":"Input API Test"
+,"supportEmail":"acavazos@buildfire.com"
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+  "features" : [],
+  "languages" : ["en"]
+}
