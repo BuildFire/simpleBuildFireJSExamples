@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--
+		NOTE:
+		1. You can reference the file in SDK via relative path
+		2. The Control and Widget Should NOT share resources. Only the Widget folder will make it to the device
+		3. You may include any JS framework you want with your Widget and Control folders. However, keep in mind
+		    to keep you plugin as light weight as possible for performance and transport reasons
+	-->
+
+	<!-- You can load helper.css to use our helper classes.
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+	-->
+
+	<!-- JS -->
+	<script src="../../../scripts/buildfire.min.js"></script>
+  <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
+
+	<!--
+   <script src="../../../../scripts/angular/angular.min.js"></script>
+   <script src="../../../../scripts/angular/ui-bootstrap.min.js"></script>
+
+   <script src="../../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+   -->
+</head>
+<body>
+
+  <style>
+    body {
+      padding: 0 15px;
+    }
+    textarea {
+      width: 100%;
+      border: none;
+      height: 150px;
+    }
+  </style>
+
+  <h1>Input API Tester</h1>
+
+  <p>Settings JSON</p>
+  <textarea id="settings">
+{
+  "placeholder": "Say something...",
+  "saveText": "Done",
+  "cancelText": "Cancel"
+}
+  </textarea>
+
+  <button onclick="showDialog()" class="btn btn-primary btn-block">
+    Call Show Dialog
+  </button>
+  <br />
+
+  <p>Result</p>
+  <textarea id="result"></textarea>
+
+  <script>
+
+    function showDialog() {
+      var settings = JSON.parse(document.getElementById('settings').value);
+
+      buildfire.input.showTextDialog(settings, function(err, data) {
+        if (err) return alert(JSON.strinfgify(err));
+        document.getElementById('result').innerHTML = JSON.stringify(data, null, true);
+      });
+    }
+
+  </script>
+
+</body>
+</html>
