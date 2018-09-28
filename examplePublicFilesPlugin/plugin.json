@@ -1,0 +1,22 @@
+{
+   "author":"Daniel Hindi"
+,"pluginName":"Public Files Example"
+,"pluginDescription":"Explains how to call public files service and recieve the result"
+,"supportEmail":""
+,"control":{
+  "content":{
+    "enabled":false
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+  "features" : [],
+  "languages" : ["en"]
+}
