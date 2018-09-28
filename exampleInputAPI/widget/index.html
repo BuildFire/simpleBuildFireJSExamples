@@ -47,6 +47,8 @@
             if(images){
                 let imageList = document.getElementById('imageList');
                 imageList.images = images;
+
+                imageList.addEventListener('imageSelected', (e) => {alert(e.detail);});
             }
         });
     }
