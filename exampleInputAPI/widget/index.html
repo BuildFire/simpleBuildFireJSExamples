@@ -48,7 +48,9 @@
                 let imageList = document.getElementById('imageList');
                 imageList.images = images;
 
-                imageList.addEventListener('imageSelected', (e) => {alert(e.detail);});
+                imageList.addEventListener('imageSelected', (e) => {
+                  buildfire.imagePreviewer.show({ images: [e.detail] })
+                });
             }
         });
     }
