@@ -5,8 +5,7 @@
   <meta name="buildfire" content="disableFastClick">
 
   <script src="../../../scripts/buildfire.min.js"></script>
-  <script src="../../../scripts/buildfire/services/notifications/pushNotifications.js"></script>
-  <script src="https://unpkg.com/@abuturla/buildfire-components@0.0.2-15/dist/buildfire-components.js"></script>
+  <script src="https://unpkg.com/@abuturla/buildfire-components@0.0.3-2/dist/buildfire-components.js"></script>
 
 </head>
 <body>
@@ -46,10 +45,13 @@
 
             if(images){
                 let imageList = document.getElementById('imageList');
+                imageList.prefetch = true;
                 imageList.images = images;
 
                 imageList.addEventListener('imageSelected', (e) => {
-                  buildfire.imagePreviewer.show({ images: [e.detail] })
+                    let selectedImage = e.detail.filter(image => image.selected);
+
+                  buildfire.imagePreviewer.show({ images: selectedImage})
                 });
             }
         });
