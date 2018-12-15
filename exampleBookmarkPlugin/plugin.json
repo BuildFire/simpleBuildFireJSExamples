@@ -1,0 +1,21 @@
+{
+  "author":"BuildFire",
+  "pluginName": "plugin-template-webpack",
+  "pluginDescription": "BuildFire plugin template for Webpack",
+  "supportEmail":"support@buildfire.com",
+  "control": {
+    "content":{
+      "enabled":true
+    },
+    "design":{
+      "enabled":false
+    },
+    "settings":{
+      "enabled":false
+    }
+  },
+  "widget":{},
+  "features" : [],
+  "webpack": "8080",
+  "languages" : ["en"]
+}

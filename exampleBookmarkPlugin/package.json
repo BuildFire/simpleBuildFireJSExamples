@@ -1,0 +1,31 @@
+{
+  "name": "plugin-template-webpack",
+  "version": "1.0.0",
+  "description": "BuildFire plugin template for Webpack",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack --config ./webpack/build.config.js"
+  },
+  "keywords": [
+    "buildfire",
+    "plugin",
+    "webpack"
+  ],
+  "author": "BuildFire",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "babel-loader": "^8.0.0-beta.0",
+    "copy-webpack-plugin": "^4.1.1",
+    "css-loader": "^0.28.9",
+    "eslint": "^4.9.0",
+    "extract-text-webpack-plugin": "^3.0.2",
+    "html-webpack-plugin": "^2.30.1",
+    "style-loader": "^0.20.1",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.3",
+    "zip-webpack-plugin": "^2.0.0"
+  }
+}
