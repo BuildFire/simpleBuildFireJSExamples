@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="buildfire" content="disableFastClick">
+
+  <script src="../../../scripts/buildfire.min.js"></script>
+  <script src="https://unpkg.com/@abuturla/buildfire-components@0.0.3-2/dist/buildfire-components.js"></script>
+
+</head>
+<body>
+
+<style>
+  body {
+    padding: 0 15px;
+  }
+  textarea {
+    width: 100%;
+    border: none;
+    height: 150px;
+  }
+</style>
+
+<h1>Input API Tester</h1>
+
+<button onclick="showDialog()" class="btn btn-primary btn-block">
+  Call Show Dialog
+</button>
+<br />
+
+<p>Result</p>
+<bf-image-list id="imageList" token="a8nm3iaxn"></bf-image-list>
+
+<script>
+    function showDialog() {
+        const settings = {
+            "placeholder": "Say something...",
+            "saveText": "Done",
+            "cancelText": "Cancel",
+            "attachments": { "images": { "enable": true } }
+        };
+
+        buildfire.input.showTextDialog(settings, function(err, data) {
+            const images = data.results[0].images;
+
+            if(images){
+                let imageList = document.getElementById('imageList');
+                imageList.prefetch = true;
+                imageList.images = images;
+
+                imageList.addEventListener('imageSelected', (e) => {
+                    let selectedImage = e.detail.filter(image => image.selected);
+
+                  buildfire.imagePreviewer.show({ images: selectedImage})
+                });
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

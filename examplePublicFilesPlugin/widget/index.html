@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+	<!-- Load helper.css to use our helper classes.
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+	-->
+	
+	<!-- JS -->
+	<script src="../../../scripts/buildfire.js"></script>
+    <script src="../../../scripts/buildfire/services/publicFiles/publicFiles.js"></script>
+   
+ 	<!--
+    <script src="../../../scripts/angular/angular.min.js"></script>
+    <script src="../../../scripts/angular/ui-bootstrap.min.js"></script>
+
+    <script src="../../../scripts/jquery/jquery-1.11.2.min.js"></script>
+
+    -->
+    <script>
+        function upload() {
+            var onProgress = function(result){
+                console.log("onProgress" + JSON.stringify(result));
+            }
+
+            var onComplete = function(result){
+                console.log("onComplete" + JSON.stringify(result));
+            }
+
+            var callback = function(err,result){
+                console.log("callback" + JSON.stringify(result));
+                var statusDiv = document.getElementById("status")
+                for(var i = 0 ; i < result.length ; i++){
+                    statusDiv.innerHTML += 'filename:' + '   ' + result[i].filename  + '<br/>' ;
+                    statusDiv.innerHTML += 'status:' + '   ' +  result[i].status  + '<br/>' ;
+                    if(result[i].url)
+                    statusDiv.innerHTML += 'url:' + '   ' + result[i].url  + '<br/>' ;
+
+                    if(result[i].error)
+                    statusDiv.innerHTML += 'error:' +  '   ' + result[i].error  + '<br/><br/>' ;
+                }
+            }
+
+            buildfire.services.publicFiles.showDialog({ allowMultipleFilesUpload : true}, onProgress , onComplete ,callback);
+        }
+    </script>
+</head>
+<body>
+<div>Test Public Files Upload</div>
+<div onclick="upload()">Click for Upload</div>
+<br>
+<div id="status">
+
+</div>
+</body>
+</html>
