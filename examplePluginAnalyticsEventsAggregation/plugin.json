@@ -1,0 +1,22 @@
+{
+  "author":"Ahnad Hamed"
+,"pluginName":"Register Plugin Events With Aggregation"
+,"pluginDescription":"This plugin is used to show how to register and track dynamic plugin events with aggregation operations."
+,"supportEmail":""
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+  "features" : [],
+  "languages" : ["en"]
+}
