@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="buildfire" content="disableBootstrap">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- JS -->
+    <script src="../../../../scripts/buildfire.min.js"></script>
+    <!-- Buildfire Services -->
+    <script src="../../../../scripts/buildfire/services/searchEngine/searchEngine.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <script>
+        function startLoading() {
+            document.querySelector('.loading').classList.remove("hidden");
+        }
+        function stopLoading() {
+            document.querySelector('.loading').classList.add("hidden");
+        }
+
+        function showNotification(type, message) {
+            switch (type) {
+                case 'success':
+                    document.querySelector('#notification').classList.add("alert-success");
+                    document.querySelector('#notification').classList.remove("alert-danger");
+                    break;
+                case 'error':
+                    document.querySelector('#notification').classList.add("alert-danger");
+                    document.querySelector('#notification').classList.remove("alert-success");
+                    break;
+            }
+
+            document.querySelector('#notification').innerHTML = message;
+            document.querySelector('#notification').classList.add("show");
+            setTimeout(function () {
+                document.querySelector('#notification').classList.remove("show");
+            }, 10000);
+        }
+
+        function insertUpdateData() {
+            var _jsonData = {};
+
+            try {
+                if (document.querySelector('#json_data').value) {
+                    _jsonData = JSON.parse(document.querySelector('#json_data').value);
+                }
+            } catch (e) {
+                showNotification('error', 'Invalid json data format');
+                return;
+            }
+
+            startLoading();
+
+            var data = {
+                tag: document.querySelector('#tag').value,
+                title: document.querySelector('#title').value,
+                description: document.querySelector('#description').value,
+                keywords: document.querySelector('#keywords').value,
+                image_url: document.querySelector('#image_url').value,
+                data: _jsonData
+            };
+
+            if (document.querySelector('#id').value) {
+                //update mode
+                data["id"] = document.querySelector('#id').value;
+                buildfire.services.searchEngine.update(data, function (err, response) {
+                    if (err) {
+                        console.error('Error in updating data', err);
+                        showNotification('error', 'Error in updating data: ' + JSON.stringify(err));
+                    } else {
+                        console.log('Data Updated, Document id: ' + response.id);
+                        showNotification('success', 'Data Updated, Document id: <strong>' + response.id + '</strong>');
+                        document.getElementById("insertUpdateDataForm").reset();
+                    }
+                    stopLoading();
+                });
+            } else {
+                buildfire.services.searchEngine.insert(data, function (err, response) {
+                    if (err) {
+                        console.error('Error in inserting data', err);
+                        showNotification('error', 'Error in inserting data: ' + JSON.stringify(err));
+                    } else {
+                        console.log('Data Inserted, Document id: ' + response.id);
+                        showNotification('success', 'Data Inserted, Document id: <strong>' + response.id + '</strong>');
+                        document.getElementById("insertUpdateDataForm").reset();
+                    }
+                    stopLoading();
+                });
+            }
+        }
+
+        function deleteData(id, tag) {
+            startLoading();
+            if (id) {
+                var deleteData = {
+                    id: id,
+                    tag: tag
+                };
+
+                buildfire.services.searchEngine.delete(deleteData, function (err, response) {
+                    if (err) {
+                        console.error('Error in deleting data', err);
+                        showNotification('error', 'Error in deleting data: ' + JSON.stringify(err));
+                    } else {
+                        showNotification('success', 'Data deleted');
+                    }
+                    stopLoading();
+                });
+            }
+        };
+
+        function searchData() {
+            clearDataSearch();
+            startLoading();
+
+            var searchQuery = {
+                searchText: document.querySelector('#searchText').value || "",
+                pageSize: document.querySelector('#pageSize').value || 50,
+                pageIndex: document.querySelector('#pageIndex').value || 0,
+                preHighlightTag: "<b>",
+                postHighlightTag: "</b>",
+            };
+
+            buildfire.services.searchEngine.search(searchQuery, function (err, response) {
+                if (err) {
+                    console.error('Error in searching data', err);
+                    showNotification('error', 'Error in searching data: ' + JSON.stringify(err));
+                } else {
+                    if (response && response.hits && response.hits.hits.length > 0) {
+                        for (var i = 0; i < response.hits.hits.length; i++) {
+                            var li = document.createElement('li');
+                            li.setAttribute('class', 'list-group-item');
+                            var _highlightedData = "<ul class='list-group'>";
+                            if (response.hits.hits[i].highlight) {
+                                for (var key in response.hits.hits[i].highlight) {
+                                    if (response.hits.hits[i].highlight.hasOwnProperty(key)) {
+                                        var highlightText = "";
+                                        for (var k = 0; k < response.hits.hits[i].highlight[key].length; k++) {
+                                            highlightText += response.hits.hits[i].highlight[key][k];
+                                        }
+                                        _highlightedData += "<li class='list-group-item'><u class='text-primary text-uppercase'>" + key + "</u>: " + highlightText + "</li>";
+                                    }
+                                }
+                                _highlightedData += "</ul";
+                            }
+
+
+                            var _html =
+                                "<ul id='" + response.hits.hits[i]._id + "' class='list-group'>" +
+                                "<li class='list-group-item'><button type='button' class='btn btn-danger' onclick='deleteData(\"" + response.hits.hits[i]._id + "\",\"" + response.hits.hits[i]._source.tag + "\")'>Delete</button></li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Id</strong>: " + response.hits.hits[i]._id + "</li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Tag</strong>: " + response.hits.hits[i]._source.tag + "</li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Title</strong>: " + response.hits.hits[i]._source.searchable.title + "</li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Description</strong>: " + response.hits.hits[i]._source.searchable.description + "</li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Keywords</strong>: " + response.hits.hits[i]._source.searchable.keywords + "</li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Json Data</strong>: " + JSON.stringify(response.hits.hits[i]._source.data) + "</li>" +
+                                "<li class='list-group-item'><strong class='text-primary'>Highlights</strong>: " + _highlightedData + "</li>" +
+                                "</ul>";
+                            li.innerHTML = _html;
+                            document.querySelector('#search_result ul').appendChild(li);
+                        }
+                    }
+                }
+                document.querySelector('#search_result').classList.remove('hidden');
+                stopLoading();
+            });
+        }
+
+        function clearDataSearch() {
+            document.querySelector('#search_result').classList.add('hidden');
+            document.querySelector('#search_result ul').innerHTML = "";
+        }
+
+        /**
+         *
+         * Search Engine - Feeds Services
+         *
+         */
+
+        function insertFeed() {
+            startLoading();
+            var insertOptions = {
+                tag: document.querySelector('#feedTag').value,
+                title: document.querySelector('#feedTitle').value,
+                description: document.querySelector('#feedDescription').value,
+                feedType: document.querySelector('#feedType').value,
+                feedConfig: {
+                    url: document.querySelector('#feedUrl').value
+                },
+                feedItemConfig: {
+                    uniqueKey: document.querySelector('#feedItemUniqueKey').value,
+                    titleKey: document.querySelector('#feedItemTitleKey').value,
+                    urlKey: document.querySelector('#feedItemUrlKey').value,
+                    descriptionKey: document.querySelector('#feedItemDescriptionKey').value,
+                    publishDateKey: document.querySelector('#feedItemPublishDateKey').value,
+                    imageUrlKey: document.querySelector('#feedItemImageUrlKey').value
+                }
+            };
+
+            buildfire.services.searchEngine.feeds.insert(insertOptions, function (err, response) {
+                if (err) {
+                    console.error('Error in inserting feed', err);
+                    showNotification('error', 'Error in inserting feed: ' + JSON.stringify(err));
+                } else {
+                    document.getElementById("insertFeedForm").reset();
+                    showNotification('success', 'Feed Inserted, Feed id: <strong>' + response.id + '</strong>');
+                    console.log('Feed Inserted, Feed id: ' + response.id);
+                }
+                stopLoading();
+            });
+        }
+
+        function getFeeds() {
+            clearFeedsSearch();
+            startLoading()
+
+            var getOptions = {
+                tag: document.querySelector('#getFeedTag').value,
+                feedType: document.querySelector('#getFeedType').value
+            };
+
+            buildfire.services.searchEngine.feeds.get(getOptions, function (err, response) {
+                if (err) {
+                    console.error('Error in fetching feeds', err);
+                    showNotification('error', 'Error in fetching feed: ' + JSON.stringify(err));
+                } else {
+                    for (var i = 0; i < response.length; i++) {
+                        var li = document.createElement('li');
+                        li.setAttribute('class', 'list-group-item');
+
+                        var _html =
+                            "<ul id='" + response[i]._id + "' class='feeds-list list-group'>" +
+                            "<li class='list-group-item'><div class='checkbox'><label><input value='true' class='cbRemoveFeedData' type='checkbox'> Remove Feed Data </label></div></li>" +
+                            "<li class='list-group-item'><button type='button' class='btn btn-danger' onclick='deleteFeeds(\"" + response[i]._id + "\",\"" + response[i].tag + "\",this)'>Delete</button></li>" +
+                            "<li class='list-group-item'><strong class='text-primary'>Id</strong>: " + response[i]._id + "</li>" +
+                            "<li class='list-group-item'><strong class='text-primary'>Tag</strong>: " + response[i].tag + "</li>" +
+                            "<li class='list-group-item'><strong class='text-primary'>Title</strong>: " + response[i].title + "</li>" +
+                            "<li class='list-group-item'><strong class='text-primary'>Description</strong>: " + response[i].description + "</li>" +
+                            "</ul>";
+                        li.innerHTML = _html;
+                        document.querySelector('#feed_search_result ul').appendChild(li);
+
+                    }
+                }
+                document.querySelector('#feed_search_result').classList.remove('hidden');
+                stopLoading();
+            });
+        }
+
+        function clearFeedsSearch() {
+            document.querySelector('#feed_search_result').classList.add('hidden');
+            document.querySelector('#feed_search_result ul').innerHTML = "";
+        }
+
+        function deleteFeeds(id, tag, elm) {
+            var _cbRemoveData = $(elm).parents(".feeds-list").find('.cbRemoveFeedData:checked').val();
+            var deleteFeed = {tag: tag, feedId: id, removeFeedData: _cbRemoveData == 'true' ? true : false};
+            startLoading();
+
+            buildfire.services.searchEngine.feeds.delete(deleteFeed, function (err, response) {
+                if (err) {
+                    console.error('Error in deleting feed', err);
+                    showNotification('error', 'Error in deleting feed: ' + JSON.stringify(err));
+                } else {
+                    console.log(response);
+                }
+                stopLoading();
+            });
+        }
+    </script>
+    <style>
+        /* The snackbar - position it at the bottom and in the middle of the screen */
+        #notification {
+            visibility: hidden; /* Hidden by default. Visible on click */
+            min-width: 250px; /* Set a default minimum width */
+            width: 500px; /* Set a default  width */
+            margin-left: -250px; /* Divide value of min-width by 2 */
+            text-align: center; /* Centered text */
+            border-radius: 2px; /* Rounded borders */
+            padding: 16px; /* Padding */
+            position: fixed; /* Sit on top of the screen */
+            z-index: 1; /* Add a z-index if needed */
+            left: 50%; /* Center the snackbar */
+            bottom: 55px; /* 30px from the bottom */
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Show the snackbar when clicking on a button (class added with JavaScript) */
+        #notification.show {
+            visibility: visible; /* Show the snackbar */
+            /* Add animation: Take 0.5 seconds to fade in and out the snackbar.
+            However, delay the fade out process for 2.5 seconds */
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 10s;
+            animation: fadein 0.5s, fadeout 0.5s 10s;
+        }
+
+        /* Animations to fade the snackbar in and out */
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 55px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 55px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+            from {bottom: 55px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 55px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+        /* Absolute Center Spinner */
+        .loading {
+            position: fixed;
+            z-index: 999;
+            height: 2em;
+            width: 2em;
+            overflow: visible;
+            margin: auto;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+        }
+
+        /* Transparent Overlay */
+        .loading:before {
+            content: '';
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        /* :not(:required) hides these rules from IE9 and below */
+        .loading:not(:required) {
+            /* hide "loading..." text */
+            font: 0/0 a;
+            color: transparent;
+            text-shadow: none;
+            background-color: transparent;
+            border: 0;
+        }
+
+        .loading:not(:required):after {
+            content: '';
+            display: block;
+            font-size: 10px;
+            width: 1em;
+            height: 1em;
+            margin-top: -0.5em;
+            -webkit-animation: spinner 1500ms infinite linear;
+            -moz-animation: spinner 1500ms infinite linear;
+            -ms-animation: spinner 1500ms infinite linear;
+            -o-animation: spinner 1500ms infinite linear;
+            animation: spinner 1500ms infinite linear;
+            border-radius: 0.5em;
+            -webkit-box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.5) -1.5em 0 0 0, rgba(0, 0, 0, 0.5) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+            box-shadow: rgba(0, 0, 0, 0.75) 1.5em 0 0 0, rgba(0, 0, 0, 0.75) 1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) 0 1.5em 0 0, rgba(0, 0, 0, 0.75) -1.1em 1.1em 0 0, rgba(0, 0, 0, 0.75) -1.5em 0 0 0, rgba(0, 0, 0, 0.75) -1.1em -1.1em 0 0, rgba(0, 0, 0, 0.75) 0 -1.5em 0 0, rgba(0, 0, 0, 0.75) 1.1em -1.1em 0 0;
+        }
+
+        /* Animation */
+
+        @-webkit-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @-moz-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @-o-keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            100% {
+                -webkit-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -ms-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="loading hidden">Loading&#8230;</div>
+
+    <div id="notification" class="alert">
+
+    </div>
+    <h2 class="text-center">Search Engine Services</h2>
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingOne">
+                <h4 class="panel-title">
+                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne"
+                       aria-expanded="true" aria-controls="collapseOne">
+                        Insert & Update Data
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                    <form id="insertUpdateDataForm">
+                        <h4 class="text-center">Insert Data</h4>
+                        <div class="form-group">
+                            <label for="tag">Id (For update mode):</label>
+                            <input type="text" class="form-control" id="id" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="tag">Tag:</label>
+                            <input type="text" class="form-control" id="tag" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="title">Title:</label>
+                            <input type="text" class="form-control" id="title" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <input type="text" class="form-control" id="description"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="keywords">Keywords:</label>
+                            <input type="text" class="form-control" id="keywords"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="image_url">Image Url:</label>
+                            <input type="text" class="form-control" id="image_url"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="json_data">JSON Data:</label>
+                            <textarea class="form-control" id="json_data"></textarea>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-default" onclick="insertUpdateData()">Insert/Update
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingTwo">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Search & Delete Data
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div class="panel-body">
+                    <form id="searchDataForm">
+                        <h4 class="text-center">Search Data</h4>
+                        <div class="form-group">
+                            <label for="searchText">Search Text:</label>
+                            <input type="text" class="form-control" id="searchText"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pageSize">Page Size:</label>
+                            <input type="text" class="form-control" placeholder="50" value="50" id="pageSize" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pageIndex">Page Number:</label>
+                            <input type="text" class="form-control" placeholder="0" value="0" id="pageIndex" required/>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" onclick="searchData()">Search</button>
+                            <button type="button" class="btn btn-default" onclick="clearDataSearch()">Clear</button>
+                        </div>
+
+                        <div id="search_result" class="form-group hidden">
+                            <label for="search_result">Result:</label>
+                            <ul class="list-group">
+
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingThree">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        Insert Feeds
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div class="panel-body">
+                    <form id="insertFeedForm">
+                        <h4 class="text-center">Insert Feeds</h4>
+                        <div class="form-group">
+                            <label for="feedTag">Tag:</label>
+                            <input type="text" class="form-control" id="feedTag" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedTitle">Title:</label>
+                            <input type="text" class="form-control" id="feedTitle" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedDescription">Description:</label>
+                            <input type="text" class="form-control" id="feedDescription"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedType">Feed Type:</label>
+                            <input type="text" class="form-control" value="rss" id="feedType"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedUrl">Feed Url:</label>
+                            <input type="text" class="form-control" id="feedUrl" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedItemUniqueKey">Feed Item Unique Key:</label>
+                            <input type="text" class="form-control" id="feedItemUniqueKey"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedItemTitleKey">Feed Item Unique Title:</label>
+                            <input type="text" class="form-control" id="feedItemTitleKey"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedItemDescriptionKey">Feed Item Description Key:</label>
+                            <input type="text" class="form-control" id="feedItemDescriptionKey"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedItemUrlKey">Feed Item Url Key:</label>
+                            <input type="text" class="form-control" id="feedItemUrlKey"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedItemPublishDateKey">Feed Item Publish Date Key:</label>
+                            <input type="text" class="form-control" id="feedItemPublishDateKey"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="feedItemImageUrlKey">Feed Item Image Url Key:</label>
+                            <input type="text" class="form-control" id="feedItemImageUrlKey"/>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="button" class="btn btn-default" onclick="insertFeed()">Add Feed</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingFour">
+                <h4 class="panel-title">
+                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion"
+                       href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        Get & Delete Feeds
+                    </a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+                <div class="panel-body">
+                    <form id="fetchDeleteFeedsForm">
+                        <h4 class="text-center">Get Feeds</h4>
+                        <div class="form-group">
+                            <label for="feedTag">Tag:</label>
+                            <input type="text" class="form-control" id="getFeedTag" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="feedType">Feed Type:</label>
+                            <input type="text" class="form-control" value="rss" id="getFeedType"/>
+                        </div>
+                        <div class="text-center">
+                            <button type="button" class="btn btn-primary" onclick="getFeeds()">Get Feeds</button>
+                            <button type="button" class="btn btn-default" onclick="clearFeedsSearch()">Clear</button>
+                        </div>
+                        <div id="feed_search_result" class="form-group hidden">
+                            <label for="feed_search_result">Result:</label>
+                            <ul class="list-group">
+
+                            </ul>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

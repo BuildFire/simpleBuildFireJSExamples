@@ -1,0 +1,22 @@
+{
+  "author":"Ahmad Hamed"
+,"pluginName":"CRUD Operations on Search Engine Services"
+,"pluginDescription":"This plugin is used to show how to work with buildfire search engine services."
+,"supportEmail":""
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+  "features" : [],
+  "languages" : ["en"]
+}
