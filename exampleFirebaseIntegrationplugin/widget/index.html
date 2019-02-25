@@ -16,6 +16,7 @@
     -->
 
     <!-- JS -->
+    <script src="https://www.gstatic.com/firebasejs/5.8.2/firebase.js"></script>
     <script src="../../../scripts/buildfire.min.js"></script>
     <script src="../../../scripts/buildfire/services/firebase/firebase.js"></script>
 
@@ -52,6 +53,13 @@
     </div>
 </div>
 <script>
+
+    var _integrationToken = null;
+    buildfire.datastore.get('integration_token', function (err, result) {
+        if (result && result.data)
+            _integrationToken = result.data.integrationToken;
+    });
+
     function loginBuildfire() {
         document.getElementById('custom-token').innerHTML = "";
         document.getElementById('error-message').classList.add('hidden');
@@ -60,8 +68,7 @@
         buildfire.auth.login(null, function (err, result) {
             if (err) {
                 console.error("Login to buildfire", err);
-            }
-            else {
+            } else {
                 if (result) {
                     //show loading
                     document.getElementById('loading').classList.remove('hidden');
@@ -76,20 +83,108 @@
         /*
         * You will find the integration token in Developer Portal Site, under Integrations Page
         * */
-        var _integrationToken = "your-integration-token";
         buildfire.services.firebase.createCustomToken({integrationToken: _integrationToken}, function (err, result) {
             //hide loading
             document.getElementById('loading').classList.add('hidden');
             if (err) {
                 document.getElementById('error-message').innerHTML = err.message;
                 document.getElementById('error-message').classList.remove('hidden');
-            }
-            else if (result) {
+            } else if (result) {
                 document.getElementById('custom-token').innerHTML = result.customToken;
                 document.getElementById('firebase-success').classList.remove('hidden');
             }
+            //result.customToken = getHashValue(result.customToken);
+            firebase.auth().signInWithCustomToken(result.customToken);
         });
     };
+
+    /**
+     * initApp handles setting up UI event listeners and registering Firebase auth listeners:
+     *  - firebase.auth().onAuthStateChanged: This listener is called when the user is signed in or
+     *    out, and that is where we update the UI.
+     */
+    var defaultApp = null;
+
+    function initApp() {
+        var config = {
+            apiKey: "AIzaSyAtI8AQEzsJ8p3bSBERq895y6NTreHccyI",//Web API Key
+            authDomain: "buildfire-apps-uat.firebaseapp.com",//Project ID
+            databaseURL: "https://buildfire-apps-uat.firebaseio.com",//database name
+            projectId: "buildfire-apps-uat"
+        };
+        defaultApp = firebase.initializeApp(config);
+
+        buildfire.auth.onLogout(function () {
+            firebase.auth().signOut();
+        });
+
+        // Listening for auth state changes.
+        // [START authstatelistener]
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user) {
+                // User is signed in.
+                var displayName = user.displayName;
+                var email = user.email;
+                var emailVerified = user.emailVerified;
+                var photoURL = user.photoURL;
+                var isAnonymous = user.isAnonymous;
+                var uid = user.uid;
+                var providerData = user.providerData;
+                // [START_EXCLUDE]
+                //document.getElementById('quickstart-sign-in-status').textContent = 'Signed in';
+                //document.getElementById('quickstart-sign-in').textContent = 'Sign out';
+                //document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
+                // [END_EXCLUDE]
+            } else {
+                // User is signed out.
+                // [START_EXCLUDE]
+                //document.getElementById('quickstart-sign-in-status').textContent = 'Signed out';
+                //document.getElementById('quickstart-sign-in').textContent = 'Sign in';
+                //document.getElementById('quickstart-account-details').textContent = 'null';
+                // [END_EXCLUDE]
+            }
+            // [START_EXCLUDE]
+            //document.getElementById('quickstart-sign-in').disabled = false;
+            // [END_EXCLUDE]
+        });
+        // [END authstatelistener]
+        //document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
+    }
+
+    function getHashValue(key) {
+        var matches = location.hash.match(new RegExp(key + '=([^&]*)'));
+        return matches ? matches[1] : null;
+    }
+
+    window.onload = function () {
+        initApp();
+    };
+
+    var cityCollectionName = null;
+    buildfire.services.firebase.getCollectionPath({collectionName: 'cities'}, function (err, result) {
+        cityCollectionName = result;
+    });
+
+    function addCities() {
+        var db = defaultApp.firestore();
+
+        db.collection(cityCollectionName).doc("SanDiego").set({
+            createdOn: new Date(),
+            createdBy: firebase.auth().currentUser.uid,
+            lastUpdatedBy: firebase.auth().currentUser.uid,
+            lastUpdatedOn: new Date(),
+            readability: true,
+            name: "San Diego",
+            state: "CA",
+            country: "USA"
+        })
+            .then(function () {
+                console.log("Document successfully written!");
+            })
+            .catch(function (error) {
+                console.error("Error writing document: ", error);
+            });
+    }
 </script>
 </body>
 </html>
