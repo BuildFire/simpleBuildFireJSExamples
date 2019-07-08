@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--
+		NOTE:
+		1. You can reference the file in SDK via relative path
+		2. The Control and Widget Should NOT share resources. Only the Widget folder will make it to the device
+		3. You may include any JS framework you want with your Widget and Control folders. However, keep in mind
+		    to keep you plugin as light weight as possible for performance and transport reasons
+	-->
+
+  <!-- You can load helper.css to use our helper classes.
+	<link href="../../../../styles/helper.css" rel="stylesheet">
+	-->
+
+	<!-- JS -->
+	<script src="../../../scripts/buildfire.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="assets/styles.css" />
+</head>
+
+<body>
+    <div class="page-container flex flex--column">
+        <div class="main-content flex">
+            <div class="main-content__body">
+                <div class="container">
+                    <div class="row tab-content active account">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h5>Balance</h5>
+                                </div>
+                            </div>
+                            <div class="row balance">
+                                <div class="col-xs-12">
+                                    <div id="balance" class="balance__amount balance--text">10.5</div>
+                                    <div class="balance__credit balance--text">/ credits</div>
+                                    <div class="balance__add">+</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="productsContainer" class="row tab-content products">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4>Bundles</h4>
+                                </div>
+                            </div>
+                            <div class="row products__product">
+                                <div class="col-xs-3">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="col-xs-6">
+                                    <div>Bundle Name</div>
+                                    <div>Bundle Description</div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <button>Buy</button>
+                                </div>
+                            </div>
+                            <div class="row products__product">
+                                <div class="col-xs-3">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="col-xs-6">
+                                    <div>Product Name</div>
+                                    <div>Product Description</div>
+                                </div>
+                                <div class="col-xs-3">
+                                    <button>Buy</button>
+                                </div>
+                            </div>
+                            <div class="row products__product">
+                                <div class="col-xs-3">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="col-xs-6">
+                                    <div>Product Name</div>
+                                    <div>Product Description</div>
+                                </div>
+                                <div class="col-xs-3">u
+                                    <button>Buy</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="transactionsContainer" class="row tab-content transactions">
+                        <div class="col-xs-12">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <h4>Transactions</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">debit</div>
+                                <div class="col-xs-8">-10</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-4">credit</div>
+                                <div class="col-xs-8">+10</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav>
+            <ul class="row tabs">
+                <li id="account" class="tabs__tab col-xs-4 active">Account</li>
+                <li id="products" class="tabs__tab col-xs-4">Products</li>
+                <li id="transactions" class="tabs__tab col-xs-4">Transactions</li>
+            </ul>
+        </nav>
+    </div>
+    <script src="https://js.stripe.com/v3/"></script>
+    <form id="payment-form">
+        <label>
+            <input name="cardholder-name" class="field is-empty" placeholder="Jane Doe" />
+            <span><span>Name</span></span>
+        </label>
+        <label>
+            <input class="field is-empty" type="tel" placeholder="(123) 456-7890" />
+            <span><span>Phone number</span></span>
+        </label>
+        <label>
+            <div id="card-element" class="field is-empty"></div>
+            <span><span>Credit or debit card</span></span>
+        </label>
+        <button type="submit">Pay $25</button>
+        <div class="outcome">
+            <div class="error" role="alert"></div>
+            <div class="success">
+                Success! Your Stripe token is <span class="token"></span>
+            </div>
+        </div>
+    </form>
+  <!--
+    Do not include the 'widget.js' script tag!
+    Webpack will inject it automatically to this html's body
+  -->
+</body>
+</html>
