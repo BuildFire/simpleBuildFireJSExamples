@@ -1,17 +1,21 @@
 export const buildBundlesDom = (bundles, purchase) => {
     const productsContainer = document.getElementById('productsContainer');
-    const _bundles = bundles.map(({name, description, id}) => ({name, description, id}));
-    const tree = _bundles.reduce((acc, bundle) => acc.appendChild(_product(bundle)), document.createDocumentFragment());
+    const _bundles = bundles;
+    const tree = _bundles.reduce((acc, bundle) => {
+        let ele = document.createRange().createContextualFragment(_product(bundle));
+        acc.appendChild(ele);
+        return acc;
+    }, document.createDocumentFragment());
 
-    const purchaseButtons = tree.getElementsByClassName('buy');
+    productsContainer.appendChild(tree);
+    let purchaseButtons = productsContainer.getElementsByClassName('buy');
+
     for (let i = 0; i < purchaseButtons.length; i++) {
         const button = purchaseButtons[i];
         button.addEventListener('click', (evt) => {
             evt.preventDefault();
             const params = {
-                bundle_id: button.getAttribute('data-bundle_id'),
-                payment_provider: 'stripe',
-                stripe: {source_token: '2343234'}
+                bundleId: button.getAttribute('data-bundle_id')
             };
             purchase(params, (err, receipt) => {
                 if (err)
@@ -21,7 +25,6 @@ export const buildBundlesDom = (bundles, purchase) => {
             });
         });
     }
-    productsContainer.appendChild(tree);
 };
 
 export const buildTransactionsDom = (transactions) => {
@@ -31,18 +34,19 @@ export const buildTransactionsDom = (transactions) => {
     transactionsContainer.appendChild(tree);
 };
 
-export const _product = ({name, description, id}) =>
+export const _product = (bundle) =>
     `
         <div class="row products__product">
             <div class="col-xs-3">
                 <img src="" alt="">
             </div>
             <div class="col-xs-6">
-                <div>${name}</div>
-                <div>${description}</div>
+                <div>${bundle.name}</div>
+                <div>${bundle.price}</div>
+                <div>${bundle.description}</div>
             </div>
             <div class="col-xs-3">
-                <button data-bundle_id="${id}" class="buy">Buy</button>
+                <button data-bundle_id="${bundle.bundleId}" class="buy">Buy</button>
             </div>
         </div>
     `;
@@ -60,7 +64,7 @@ export const initTabs = () => {
     const contents = document.querySelectorAll('.tab-content');
 
     for (let i = 0; i < tabs.length; i++) {
-        tabs[i].addEventListener('click', function() {
+        tabs[i].addEventListener('click', function () {
             const tab = this;
             const tabClass = tab.getAttribute('id');
             const content = document.querySelectorAll("." + tabClass)[0];
