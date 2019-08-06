@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="buildfire" content="disableBootstrap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+    <!--
+        NOTE:
+        1. You can reference the file in SDK via relative path
+        2. The Control and Widget Should NOT share resources. Only the Widget folder will make it to the device
+        3. You may include any JS framework you want with your Widget and Control folders. However, keep in mind
+            to keep you plugin as light weight as possible for performance and transport reasons
+    -->
+
+    <!-- You can load helper.css to use our helper classes.
+    <link href="../../../../styles/helper.css" rel="stylesheet">
+    -->
+
+    <!-- JS -->
+    <script src="../../../scripts/buildfire.min.js"></script>
+    <script src="../../../scripts/buildfire/services/stripe/stripe.js"></script>
+    <script>
+        function charge() {
+            buildfire.services.stripe.charge({
+                items: [{
+                    name: document.querySelector("#txtProductName").value,
+                    description: document.querySelector("#txtProductDescription").value,
+                    amount: document.querySelector("#txtProductAmount").value
+                }]
+            }, function (err, result) {
+                if (result) {
+                    console.log("Success Payment");
+                }
+            });
+        }
+
+        function subscribe() {
+            buildfire.services.stripe.subscribe({
+                items: [{
+                    planId: document.querySelector("#txtPlanId").value
+                }],
+                trialPeriodDays: document.querySelector("#txtTrialPeriodDays").value
+            }, function (err, result) {
+                if (result) {
+                    console.log("Success Subscription");
+                }
+            });
+        }
+
+        function purchase() {
+            buildfire.services.stripe.purchase({
+                items: [{
+                    sku: document.querySelector("#txtSkuId").value,
+                    quantity: parseInt(document.querySelector("#txtQuantity").value || 1)
+                }]
+            }, function (err, result) {
+
+            });
+        }
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Charge</div>
+        <div class="card-body text-primary">
+            <div class="form-group">
+                <label for="txtProductName">Name</label>
+                <input id="txtProductName" class="form-control" type="text" placeholder="Name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtProductDescription">Description</label>
+                <input id="txtProductDescription" class="form-control" type="text" placeholder="Description"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtProductAmount">Amount</label>
+                <input id="txtProductAmount" class="form-control" type="number" placeholder="Amount"/>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="charge()">
+                Charge
+            </button>
+        </div>
+    </div>
+
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Subscribe</div>
+        <div class="card-body text-primary">
+            <div class="form-group">
+                <label for="txtPlanId">Plan Id</label>
+                <input id="txtPlanId" class="form-control" type="text" placeholder="Plan Id"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtTrialPeriodDays">Trial Period Days</label>
+                <input id="txtTrialPeriodDays" class="form-control" type="number" placeholder="Trial Period Days"/>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="subscribe()">
+                Subscribe
+            </button>
+        </div>
+    </div>
+
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Purchase</div>
+        <div class="card-body text-primary">
+            <div class="form-group">
+                <label for="txtSkuId">SKU Id</label>
+                <input id="txtSkuId" class="form-control" type="text" placeholder="SKU Id"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtQuantity">Quantity</label>
+                <input id="txtQuantity" class="form-control" type="number" placeholder="Quantity"/>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="purchase()">
+                Purchase
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
