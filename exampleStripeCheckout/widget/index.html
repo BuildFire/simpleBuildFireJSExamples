@@ -29,11 +29,15 @@
                 items: [{
                     name: document.querySelector("#txtProductName").value,
                     description: document.querySelector("#txtProductDescription").value,
-                    amount: document.querySelector("#txtProductAmount").value
-                }]
+                    amount: document.querySelector("#txtProductAmount").value,
+                }],
+                customerId: document.querySelector("#txtCustomerId").value,
+                customerEmail: document.querySelector("#txtCustomerEmail").value
             }, function (err, result) {
-                if (result) {
-                    console.log("Success Payment");
+                if (err) {
+                    console.error('Stripe Charge', err);
+                } else {
+                    console.log("Success Payment", result);
                 }
             });
         }
@@ -45,8 +49,10 @@
                 }],
                 trialPeriodDays: document.querySelector("#txtTrialPeriodDays").value
             }, function (err, result) {
-                if (result) {
-                    console.log("Success Subscription");
+                if (err) {
+                    console.error('Stripe Subscribe', err);
+                } else {
+                    console.log("Success Subscription", result);
                 }
             });
         }
@@ -58,7 +64,36 @@
                     quantity: parseInt(document.querySelector("#txtQuantity").value || 1)
                 }]
             }, function (err, result) {
+                if (err) {
+                    console.error('Stripe Subscribe', err);
+                } else {
+                    console.log("Success Purchase", result);
+                }
+            });
+        }
 
+        function getSubscription() {
+            buildfire.services.stripe.getSubscription({
+                subscriptionId: document.querySelector("#txtGetSubscriptionId").value
+            }, function (err, result) {
+                if (err) {
+                    console.error('Stripe Subscribe', err);
+                } else {
+                    console.log("Subscription object", result);
+                }
+            });
+        }
+
+        function cancelSubscription() {
+            buildfire.services.stripe.cancelSubscription({
+                subscriptionId: document.querySelector("#txtCancelSubscriptionId").value,
+                customerId: document.querySelector("#txtCancelSubscriptionCustomerId").value
+            }, function (err, result) {
+                if (err) {
+                    console.error('Stripe Subscribe', err);
+                } else {
+                    console.log("Success Cancel Subscription", result);
+                }
             });
         }
     </script>
@@ -81,6 +116,16 @@
             <div class="form-group">
                 <label for="txtProductAmount">Amount</label>
                 <input id="txtProductAmount" class="form-control" type="number" placeholder="Amount"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtCustomerId">Customer Id</label>
+                <input id="txtCustomerId" class="form-control" type="text" placeholder="Customer Id"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtCustomerEmail">Customer Email</label>
+                <input id="txtCustomerEmail" class="form-control" type="text" placeholder="Customer Email"/>
             </div>
 
             <button type="button" class="btn btn-outline-primary btn-sm" onclick="charge()">
@@ -123,6 +168,39 @@
 
             <button type="button" class="btn btn-outline-primary btn-sm" onclick="purchase()">
                 Purchase
+            </button>
+        </div>
+    </div>
+
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Get Subscription</div>
+        <div class="card-body text-primary">
+            <div class="form-group">
+                <label for="txtGetSubscriptionId">Subscription Id</label>
+                <input id="txtGetSubscriptionId" class="form-control" type="text" placeholder="Subscription Id"/>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="getSubscription()">
+                Get
+            </button>
+        </div>
+    </div>
+
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Cancel Subscription</div>
+        <div class="card-body text-primary">
+            <div class="form-group">
+                <label for="txtCancelSubscriptionId">Subscription Id</label>
+                <input id="txtCancelSubscriptionId" class="form-control" type="text" placeholder="Subscription Id"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtCancelSubscriptionCustomerId">Customer Id</label>
+                <input id="txtCancelSubscriptionCustomerId" class="form-control" type="text" placeholder="Customer Id"/>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="cancelSubscription()">
+                Cancel
             </button>
         </div>
     </div>
