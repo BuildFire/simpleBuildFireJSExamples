@@ -1,0 +1,23 @@
+{
+  "author":"Bash"
+,"pluginName":"Material Design Components"
+,"pluginDescription":"Material Design Plugins"
+,"supportEmail":"devSupport@buildfire.com"
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+"enableOfflineSupport": true,
+  "features" : [],
+  "languages" : ["en"]
+}
