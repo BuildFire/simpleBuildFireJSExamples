@@ -1,22 +1,50 @@
 const buildfire = require('buildfire');
 
 require('../../../../../scripts/buildfire/services/credits/credits.js');
-require('../scripts/stripe');
 import {initTabs, buildBundlesDom} from './ui';
 
 console.log('started');
 
-const {getUser, purchase, getBundles} = buildfire.services.credits;
+const {getUser, transferCredits, purchaseBundle, getBundles} = buildfire.services.credits;
 
-export function init (user) {
+export function init(user) {
 
     // 2) Wire the tabs up
     initTabs();
 
-    // Get the balance and set it into the DOM
-    getUser({}, (err, details) => {
-        console.log(details);
+    function loadData() {
+        // Get the balance and set it into the DOM
+        getUser({}, (err, details) => {
+            if (!err) {
+                const balanceContainer = document.getElementById('balance');
+                balanceContainer.innerText = details.balance;
+            }
+        });
+
+        getBundles({
+            creditAmount: 1,
+            receiverUserEmail: ''
+        }, (err, bundles) => {
+            if (err)
+                console.log('Error getting bundles.');
+            else
+                buildBundlesDom(bundles, purchaseBundle);
+        });
+    }
+
+    document.getElementById('sendCreditBtn').addEventListener('click', function () {
+        const creditAmount = parseInt(document.getElementById('creditAmount').value);
+        const receiverEmail = document.getElementById('receiverEmail').value;
+
+        transferCredits({
+            creditAmount: creditAmount,
+            receiverUserEmail: receiverEmail
+        }, (e, r) => {
+            loadData();
+        });
     });
+
+    loadData();
 
     //const balance = document.getElementById('balance');
     //balance.innerHTML = details.balance;
@@ -30,10 +58,5 @@ export function init (user) {
     // });
 
     // 4) Get product bundles and display in UI
-    getBundles({}, (err, bundles) => {
-        if (err)
-            console.log('Error getting bundles.');
-        else
-            buildBundlesDom(bundles, purchase);
-    });
+
 }

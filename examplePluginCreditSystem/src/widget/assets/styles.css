@@ -65,10 +65,13 @@ h4 {
 }
 
 .account {
-    background-color: #1b84ff;
     color: white;
-    padding-bottom: 10px;
     position: relative;
+}
+
+.account .top-section {
+    background-color: #1b84ff;
+    padding-bottom: 10px;
 }
 
 .balance__add {
