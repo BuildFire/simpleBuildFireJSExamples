@@ -1,5 +1,8 @@
+import {init} from './main';
+
 export const buildBundlesDom = (bundles, purchase) => {
-    const productsContainer = document.getElementById('productsContainer');
+    const productsContainer = document.getElementById('bundles-list');
+    productsContainer.innerHTML = '';
     const _bundles = bundles;
     const tree = _bundles.reduce((acc, bundle) => {
         let ele = document.createRange().createContextualFragment(_product(bundle));
@@ -74,6 +77,7 @@ export const initTabs = () => {
             }
             content.classList.add('active');
             tab.classList.add('active');
+            init();
         });
     }
 };

@@ -6,9 +6,10 @@ import {initTabs, buildBundlesDom} from './ui';
 console.log('started');
 
 const {getUser, transferCredits, purchaseBundle, getBundles} = buildfire.services.credits;
+const balanceContainer = document.getElementById('balance');
+const loggedUserName = document.getElementById('loggedUserName');
 
 export function init(user) {
-
     // 2) Wire the tabs up
     initTabs();
 
@@ -16,20 +17,24 @@ export function init(user) {
         // Get the balance and set it into the DOM
         getUser({}, (err, details) => {
             if (!err) {
-                const balanceContainer = document.getElementById('balance');
-                balanceContainer.innerText = details.balance;
+                balanceContainer.innerText = details.balance || 0;
             }
         });
 
-        getBundles({
-            creditAmount: 1,
-            receiverUserEmail: ''
-        }, (err, bundles) => {
+        getBundles({}, (err, bundles) => {
             if (err)
                 console.log('Error getting bundles.');
             else
                 buildBundlesDom(bundles, purchaseBundle);
         });
+
+
+        if (user) {
+            loggedUserName.innerText = user.displayName || user.username || user.email;
+        } else {
+            loggedUserName.innerText = 'Anonymous';
+            balanceContainer.innerText = 0;
+        }
     }
 
     document.getElementById('sendCreditBtn').addEventListener('click', function () {
@@ -45,18 +50,5 @@ export function init(user) {
     });
 
     loadData();
-
-    //const balance = document.getElementById('balance');
-    //balance.innerHTML = details.balance;
-
-    // 3) Call the credit service to get balance
-    // getTransactionHistory((err, transactions) => {
-    //     if (err)
-    //         console.log('Did not receive transaction history.');
-    //     else
-    //         buildTransactionsDom(transactions);
-    // });
-
-    // 4) Get product bundles and display in UI
 
 }
