@@ -1,0 +1,23 @@
+{
+  "author": "Buildfire, Mahmoud Bassam",
+  "pluginName": "Widget UserData Example",
+  "pluginDescription": "a quick example to show how the buildfire userData main functions work",
+  "supportEmail": "devSupport@buildfire.com",
+  "control": {
+    "content": {
+      "enabled": true
+    },
+    "design":{
+      "enabled": false
+    },
+    "settings": {
+      "enabled": false
+    }
+  },
+  "widget": {
+
+  },
+  "features": [],
+  "languages": ["en"],
+  "requireLogin" : true
+}

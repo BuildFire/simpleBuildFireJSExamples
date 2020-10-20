@@ -1,0 +1,63 @@
+.add-task {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+	border-top: 1px solid #ddd;
+	padding-top: 20px;
+}
+
+.add-task__input {
+	border: 1px solid #ddd;
+	margin-right: 10px;
+	padding: 5px 10px;
+	width: 80%;
+	border-radius: 5px;
+}
+
+.add-task__button,
+.task__delete,
+.task__edit {
+	padding: 5px 10px;
+	border-radius: 5px;
+	background-color: #4bb543;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: white;
+	font-size: 12px;
+	border: 0;
+}
+
+.task {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 25px;
+}
+
+.task__content {
+	font-size: 16px;
+	font-weight: lighter;
+	margin: 0;
+}
+
+.task__delete,
+.task__edit {
+	background-color: transparent;
+	color: #ff4444;
+	padding: 2px 10px;
+	font-size: 12px;
+	font-weight: lighter;
+	text-transform: capitalize;
+}
+
+.task__edit {
+	color: #00a1f1;
+}
+
+.task__buttons {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
