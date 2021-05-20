@@ -32,7 +32,8 @@
                     amount: document.querySelector("#txtProductAmount").value,
                 }],
                 customerId: document.querySelector("#txtCustomerId").value,
-                customerEmail: document.querySelector("#txtCustomerEmail").value
+                customerEmail: document.querySelector("#txtCustomerEmail").value,
+                captureMethod: document.querySelector("#ddlChargeCaptureType").value
             }, function (err, result) {
                 if (err) {
                     console.error('Stripe Charge', err);
@@ -109,6 +110,19 @@
                 }
             });
         }
+
+        function CapturePayment() {
+            buildfire.services.stripe.capturePayment({
+                paymentIntentsId: document.querySelector("#txtCapturePaymentIntentsId").value,
+                amountToCapture: document.querySelector("#txtCapturePaymentAmount").value || undefined
+            }, function (err, result) {
+                if (err) {
+                    console.error('Stripe Capture Payment', err);
+                } else {
+                    console.log("Success Capturing Payment", result);
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -139,6 +153,14 @@
             <div class="form-group">
                 <label for="txtCustomerEmail">Customer Email</label>
                 <input id="txtCustomerEmail" class="form-control" type="text" placeholder="Customer Email"/>
+            </div>
+
+            <div class="form-group">
+                <label for="ddlChargeCaptureType">Capture</label>
+                <select id="ddlChargeCaptureType"  class="form-control" name="ddlChargeCaptureType">
+                    <option value="automatic">Automatic</option>
+                    <option value="manual">Manual</option>
+                </select>
             </div>
 
             <button type="button" class="btn btn-outline-primary btn-sm" onclick="charge()">
@@ -234,6 +256,26 @@
 
             <button type="button" class="btn btn-outline-primary btn-sm" onclick="addCustomerCard()">
                 Add
+            </button>
+        </div>
+    </div>
+
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Capture Payment</div>
+        <div class="card-body text-primary">
+
+            <div class="form-group">
+                <label for="txtAddCustomerCardCustomerId">Payment Intents Id</label>
+                <input id="txtCapturePaymentIntentsId" class="form-control" type="text" placeholder="Payment Intents Id"/>
+            </div>
+
+            <div class="form-group">
+                <label for="txtCapturePaymentAmount">Amount (Optional)</label>
+                <input id="txtCapturePaymentAmount" class="form-control" type="text" placeholder="Amount"/>
+            </div>
+
+            <button type="button" class="btn btn-outline-primary btn-sm" onclick="CapturePayment()">
+                Capture
             </button>
         </div>
     </div>
