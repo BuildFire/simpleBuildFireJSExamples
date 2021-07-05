@@ -123,6 +123,17 @@
                 }
             });
         }
+
+        function StripeConnect() {
+            buildfire.services.stripe.connect.account({}, function (err, result) {
+                if (err) {
+                    console.error('Stripe Connect', err);
+                } else {
+                    console.log("Success Stripe Connect", result);
+                    document.getElementById('txtBfStripeConnectToken').value = result.bf_stripe_connect_token;
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -157,7 +168,7 @@
 
             <div class="form-group">
                 <label for="ddlChargeCaptureType">Capture</label>
-                <select id="ddlChargeCaptureType"  class="form-control" name="ddlChargeCaptureType">
+                <select id="ddlChargeCaptureType" class="form-control" name="ddlChargeCaptureType">
                     <option value="automatic">Automatic</option>
                     <option value="manual">Manual</option>
                 </select>
@@ -266,7 +277,8 @@
 
             <div class="form-group">
                 <label for="txtAddCustomerCardCustomerId">Payment Intents Id</label>
-                <input id="txtCapturePaymentIntentsId" class="form-control" type="text" placeholder="Payment Intents Id"/>
+                <input id="txtCapturePaymentIntentsId" class="form-control" type="text"
+                       placeholder="Payment Intents Id"/>
             </div>
 
             <div class="form-group">
@@ -277,6 +289,23 @@
             <button type="button" class="btn btn-outline-primary btn-sm" onclick="CapturePayment()">
                 Capture
             </button>
+        </div>
+    </div>
+
+    <div class="card border-primary mt-3 mb-3">
+        <div class="card-header">Stripe Connect</div>
+        <div class="card-body text-primary">
+
+            <div class="form-group">
+                <button type="button" class="btn btn-outline-primary btn-sm" onclick="StripeConnect()">
+                    Connect
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label for="txtBfStripeConnectToken">Buildfire Stripe Connect Token</label>
+                <input type="text" class="form-control" id="txtBfStripeConnectToken" disabled />
+            </div>
         </div>
     </div>
 </div>
