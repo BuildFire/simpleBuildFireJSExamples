@@ -1,0 +1,135 @@
+<!doctype html><html lang="en"><head>
+  <meta name="buildfire" content="enableMD3Theme" />
+  <script src="../../../../../../scripts/buildfire.min.js"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes"><title>Material Web - Stories Switch</title><meta name="theme-color" content="#251f16"><link href="../../../images/favicon.svg" rel="icon" sizes="any" type="image/svg+xml"><style>@font-face{font-family:'Google Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../../../fonts/google-sans/regular.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Google Sans Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../../../fonts/google-sans/mono.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}:root{--md-sys-color-surface-container: #251f16;font-family:'Google Sans',Roboto,system-ui;--md-ref-typeface-plain:'Google Sans',Roboto,system-ui;background-color:var(--md-sys-color-surface-container);color:var(--md-sys-color-on-surface);--catalog-display-xl-font-size:88px;--catalog-display-m-font-size:45px;--catalog-title-l-font-size:22px;--catalog-title-m-font-size:16px;--catalog-title-s-font-size:14px;--catalog-body-l-font-size:16px;--catalog-body-m-font-size:14px;--catalog-headline-s-font-size:24px;--catalog-label-s-font-size:11px;--catalog-shape-xl:28px;--catalog-shape-l:16px;--catalog-shape-m:12px;--catalog-shape-s:8px;--catalog-shape-xs:4px;--catalog-spacing-xl:28px;--catalog-spacing-l:16px;--catalog-spacing-m:12px;--catalog-spacing-s:8px;--catalog-top-app-bar-height:calc(48px + 2 * var(--catalog-spacing-m));scroll-padding-block-start:calc(var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) * 2)}@media screen and (max-width:600px){:root{--catalog-display-xl-font-size:55px;--catalog-title-l-font-size:16px;--catalog-body-l-font-size:14px;--catalog-body-m-font-size:12px;--catalog-spacing-xl:16px;--catalog-spacing-l:12px}}strong{-webkit-font-smoothing:antialiased}body{margin:0;font-size:var(--catalog-body-l-font-size)}a{color:var(--md-sys-color-primary);text-decoration:none}a:focus-visible,a:hover{text-decoration:underline}nav-drawer md-list.nav md-list-item[href][selected]{background-color:var(--md-sys-color-surface-container-highest)}nav-drawer md-list.nav md-list-item::part(focus-ring){--md-focus-ring-shape:var(--catalog-shape-xl)}@media (forced-colors:active){nav-drawer md-list.nav md-list-item[href][selected]{border:4px double CanvasText}nav-drawer md-list.nav md-list-item[href]{border-radius:var(--catalog-shape-xl);border:1px solid CanvasText}}nav-drawer md-list.nav{--md-list-container-color: transparent;display:block;margin-inline:var(--catalog-spacing-m);min-width:unset}nav-drawer md-list.nav md-list-item[href]{margin-block:var(--catalog-spacing-m);display:block;--md-focus-ring-shape:var(--catalog-shape-xl);border-radius:var(--catalog-shape-xl)}nav-drawer md-list.nav md-item [slot=headline]{padding-block:2px}nav-drawer md-list.nav md-item:first-of-type{padding-block:0}nav-drawer md-list.nav md-item{font-size:var(--catalog-headline-s-font-size);padding-block-end:0}nav-drawer md-list.nav md-item+md-list-item[href]{margin-block-start:0}h1{font-size:var(--catalog-display-xl-font-size)}.toc ol{list-style-type:none;font-size:var(--catalog-body-m-font-size)}.toc>ol{padding:0}.toc>ol ol{list-style-type:circle;padding-inline-start:var(--catalog-spacing-xl)}.toc ol li{margin-block:var(--catalog-spacing-m)}</style><script>"use strict";(()=>{function a(n,t,o="material-theme"){let e=globalThis[o];e||(e=new CSSStyleSheet,globalThis[o]=e,n.adoptedStyleSheets.push(e));let l=t.match(/--md-sys-color-surface-container:(.+?);/)?.[1];l&&document.querySelector('meta[name="theme-color"]')?.setAttribute("content",l),e.replaceSync(t),localStorage.setItem(o,t)}var h=localStorage.getItem("material-theme");h&&a(document,h);})();</script><noscript><link rel="stylesheet" href="../../../css/no-js.css"></noscript><noscript><style>body[dsd-pending] {
+          display: block !important;
+        }</style></noscript><link rel="stylesheet" href="../../../css/syntax-highlight.css"><link rel="stylesheet" href="../../../css/stories.css"></head><body dsd-pending><script>"use strict";(()=>{var d;function s(){var o;return d===void 0&&(d=!!(!((o=new DOMParser().parseFromString('<div><template shadowrootmode="open"></template></div>',"text/html",{includeShadowRoots:!0}).querySelector("div"))===null||o===void 0)&&o.shadowRoot)),d}var m=o=>o.parentElement===null,h=o=>o.tagName==="TEMPLATE",p=o=>o.nodeType===Node.ELEMENT_NODE;var i=o=>{var l;if(s())return;let r=[],e=o.firstElementChild;for(;e!==o&&e!==null;)if(h(e))r.push(e),e=e.content;else if(e.firstElementChild!==null)e=e.firstElementChild;else if(p(e)&&e.nextElementSibling!==null)e=e.nextElementSibling;else{let t;for(;e!==o&&e!==null;)if(m(e)){t=r.pop();let a=t.parentElement,n=t.getAttribute("shadowrootmode");if(e=t,n==="open"||n==="closed"){let f=t.hasAttribute("shadowrootdelegatesfocus");try{a.attachShadow({mode:n,delegatesFocus:f}).append(t.content)}catch{}}else t=void 0}else{let a=e.nextElementSibling;if(a!=null){e=a,t!==void 0&&t.parentElement.removeChild(t);break}let n=(l=e.parentElement)===null||l===void 0?void 0:l.nextElementSibling;if(n!=null){e=n,t!==void 0&&t.parentElement.removeChild(t);break}e=e.parentElement,t!==void 0&&(t.parentElement.removeChild(t),t=void 0)}}};HTMLTemplateElement.prototype.hasOwnProperty("shadowRoot")||i(document.body);document.body.removeAttribute("dsd-pending");})();</script><playground-project id="project" project-src="../../../assets/stories/switch/project.json"></playground-project><drag-playground  id="dragbar"><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      --_drag-bar-height: 24px;
+      --_drag-bar-border-width: 1px;
+      --_half-drag-bar-height: calc(
+        (var(--_drag-bar-height) / 2) + var(--_drag-bar-border-width)
+      );
+    }
+
+    #wrapper {
+      display: flex;
+      flex-direction: column;
+    }
+
+    :host,
+    #wrapper,
+    ::slotted(*) {
+      height: 100%;
+    }
+
+    slot {
+      display: block;
+      overflow: hidden;
+    }
+
+    [name='preview'] {
+      height: max(
+        calc(
+          100% - var(--editor-percentage, 0%) - var(--_half-drag-bar-height)
+        ),
+        0px
+      );
+    }
+
+    [name='editor'] {
+      height: max(
+        calc(var(--editor-percentage, 0px) - var(--_half-drag-bar-height)),
+        0px
+      );
+    }
+
+    #drag-bar {
+      touch-action: none;
+      background-color: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
+      border: var(--_drag-bar-border-width) solid var(--md-sys-color-outline);
+      border-radius: 12px;
+      height: var(--_drag-bar-height);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    #drag-bar:hover {
+      background-color: var(--md-sys-color-surface-container-high);
+      cursor: grab;
+    }
+
+    #drag-bar.isDragging {
+      background-color: var(--md-sys-color-inverse-surface);
+      color: var(--md-sys-color-inverse-on-surface);
+      cursor: grabbing;
+    }
+  </style><!--lit-part LswJD08QyoQ=--><!--lit-node 0--><div
+      id="wrapper"
+      style="--editor-percentage:0%;"
+    >
+      <slot name="preview"></slot>
+      <!--lit-node 2--><div
+        id="drag-bar"
+        tabindex="0"
+        role="slider"
+        aria-orientation="vertical"
+        aria-valuemax="100"
+        aria-valuemin="0"
+        aria-valuenow="0"
+        aria-valuetext="0 percent"
+        aria-label="Editor height"
+        
+        
+        
+        
+        
+        
+        class="  "
+      >
+        <!--lit-node 3--><md-icon defer-hydration>drag_handle</md-icon>
+      </div>
+      <slot name="editor"></slot>
+    </div><!--/lit-part--></template><playground-preview id="preview" project="project" slot="preview"><md-circular-progress  indeterminate></md-circular-progress></playground-preview><div slot="editor" id="editor-wrapper"><playground-file-editor id="editor" project="project" filename="stories.ts" line-numbers aria-hidden="true"><md-circular-progress  indeterminate></md-circular-progress></playground-file-editor></div></drag-playground><script>/* file:// nav-drawer fallback: opens the drawer without JS hydration */
+(function(){
+  function wire(){
+    if(window.customElements&&customElements.get('nav-drawer'))return; /* hydrated: native handles it */
+    var nav=document.querySelector('nav-drawer');
+    if(!nav||!nav.shadowRoot)return;
+    var body=nav.shadowRoot.querySelector('.body');
+    var bar=nav.querySelector('top-app-bar');
+    var btn=bar&&bar.shadowRoot&&bar.shadowRoot.querySelector('.menu-button');
+    if(!body||!btn||btn.__navWired)return;
+    btn.__navWired=true;
+    var scrim=document.createElement('div');
+    scrim.style.cssText='position:fixed;inset:0;z-index:11;background:rgba(0,0,0,.32);display:none';
+    nav.shadowRoot.appendChild(scrim);
+    function set(open){
+      body.classList.toggle('open',open);
+      scrim.style.display=open?'block':'none';
+      try{open?btn.setAttribute('selected',''):btn.removeAttribute('selected');}catch(e){}
+    }
+    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();set(!body.classList.contains('open'));});
+    scrim.addEventListener('click',function(){set(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+    nav.addEventListener('click',function(e){(e.composedPath()||[]).forEach(function(n){if(n.tagName==='A')set(false);});});
+  }/* Wire as soon as the (declarative) shadow roots exist instead of after a fixed
+     delay. The old setTimeout(wire,1200) meant a click within 1.2s of page load did
+     nothing, so every page after the first needed two clicks. Poll briefly until wired. */
+  function tryWire(n){
+    wire();
+    var nav=document.querySelector('nav-drawer');
+    var bar=nav&&nav.querySelector('top-app-bar');
+    var btn=bar&&bar.shadowRoot&&bar.shadowRoot.querySelector('.menu-button');
+    if((!btn||!btn.__navWired)&&n>0){ setTimeout(function(){tryWire(n-1);},50); }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',function(){tryWire(80);}); } else { tryWire(80); }
+  window.addEventListener('pageshow',function(){ tryWire(80); });
+})();
+</script>
+</body></html>

@@ -1,0 +1,23 @@
+{
+  "author":"Abdalla Dimes"
+,"pluginName":"Material Design 3 Components"
+,"pluginDescription":"Material Design 3 Plugins"
+,"supportEmail":"devSupport@buildfire.com"
+,"control":{
+  "content":{
+    "enabled":true
+  }
+, "design":{
+    "enabled":false
+  }
+, "settings":{
+    "enabled":false
+  }
+}
+,"widget":{
+
+},
+"enableOfflineSupport": true,
+  "features" : [],
+  "languages" : ["en"]
+}
