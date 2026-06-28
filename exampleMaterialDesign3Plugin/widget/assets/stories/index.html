@@ -1,0 +1,70 @@
+<!--
+@license
+Copyright 2023 Google LLC
+SPDX-License-Identifier: Apache-2.0
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta name="buildfire" content="enableMD3Theme" />
+  <script src="../../../../../scripts/buildfire.min.js"></script>
+
+    <script type="module" src="./theme-loader.js"></script>
+    <script type="module" src="./demo.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Google+Sans:opsz,wght@17..18,400;17..18,500;17..18,700&display=swap"
+    />
+    
+    <style>
+      :root {--md-sys-color-surface-container: #251f16;
+        background-color: var(--md-sys-color-surface);
+        color: var(--md-sys-color-on-surface);
+        font-family: "Google Sans", system-ui;
+        --md-ref-typeface-plain: "Google Sans", system-ui;
+      }
+
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body><script>/* file:// nav-drawer fallback: opens the drawer without JS hydration */
+(function(){
+  function wire(){
+    if(window.customElements&&customElements.get('nav-drawer'))return; /* hydrated: native handles it */
+    var nav=document.querySelector('nav-drawer');
+    if(!nav||!nav.shadowRoot)return;
+    var body=nav.shadowRoot.querySelector('.body');
+    var bar=nav.querySelector('top-app-bar');
+    var btn=bar&&bar.shadowRoot&&bar.shadowRoot.querySelector('.menu-button');
+    if(!body||!btn||btn.__navWired)return;
+    btn.__navWired=true;
+    var scrim=document.createElement('div');
+    scrim.style.cssText='position:fixed;inset:0;z-index:11;background:rgba(0,0,0,.32);display:none';
+    nav.shadowRoot.appendChild(scrim);
+    function set(open){
+      body.classList.toggle('open',open);
+      scrim.style.display=open?'block':'none';
+      try{open?btn.setAttribute('selected',''):btn.removeAttribute('selected');}catch(e){}
+    }
+    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();set(!body.classList.contains('open'));});
+    scrim.addEventListener('click',function(){set(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+    nav.addEventListener('click',function(e){(e.composedPath()||[]).forEach(function(n){if(n.tagName==='A')set(false);});});
+  }/* Wire as soon as the (declarative) shadow roots exist instead of after a fixed
+     delay. The old setTimeout(wire,1200) meant a click within 1.2s of page load did
+     nothing, so every page after the first needed two clicks. Poll briefly until wired. */
+  function tryWire(n){
+    wire();
+    var nav=document.querySelector('nav-drawer');
+    var bar=nav&&nav.querySelector('top-app-bar');
+    var btn=bar&&bar.shadowRoot&&bar.shadowRoot.querySelector('.menu-button');
+    if((!btn||!btn.__navWired)&&n>0){ setTimeout(function(){tryWire(n-1);},50); }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',function(){tryWire(80);}); } else { tryWire(80); }
+  window.addEventListener('pageshow',function(){ tryWire(80); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+function a(t){let e=new MouseEvent("click",{bubbles:!0});return t.dispatchEvent(e),e}function s(t){return t.currentTarget!==t.target||t.composedPath()[0]!==t.target||t.target.disabled?!1:!i(t)}function i(t){let e=r;return e&&(t.preventDefault(),t.stopImmediatePropagation()),n(),e}var r=!1;async function n(){r=!0,await null,r=!1}export{a,s as b};

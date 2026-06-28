@@ -1,0 +1,1047 @@
+<!doctype html><html lang="en"><head>
+  <meta name="buildfire" content="enableMD3Theme" />
+  <script src="../../../../../scripts/buildfire.min.js"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes"><title>Material Web - Theming</title><meta name="theme-color" content="#251f16"><link href="../../images/favicon.svg" rel="icon" sizes="any" type="image/svg+xml"><style>@font-face{font-family:'Google Sans';font-style:normal;font-weight:400;font-display:swap;src:url(../../fonts/google-sans/regular.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}@font-face{font-family:'Google Sans Mono';font-style:normal;font-weight:400;font-display:swap;src:url(../../fonts/google-sans/mono.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0300-0301,U+0303-0304,U+0308-0309,U+0323,U+0329,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}:root{--md-sys-color-surface-container: #251f16;font-family:'Google Sans',Roboto,system-ui;--md-ref-typeface-plain:'Google Sans',Roboto,system-ui;background-color:var(--md-sys-color-surface-container);color:var(--md-sys-color-on-surface);--catalog-display-xl-font-size:88px;--catalog-display-m-font-size:45px;--catalog-title-l-font-size:22px;--catalog-title-m-font-size:16px;--catalog-title-s-font-size:14px;--catalog-body-l-font-size:16px;--catalog-body-m-font-size:14px;--catalog-headline-s-font-size:24px;--catalog-label-s-font-size:11px;--catalog-shape-xl:28px;--catalog-shape-l:16px;--catalog-shape-m:12px;--catalog-shape-s:8px;--catalog-shape-xs:4px;--catalog-spacing-xl:28px;--catalog-spacing-l:16px;--catalog-spacing-m:12px;--catalog-spacing-s:8px;--catalog-top-app-bar-height:calc(48px + 2 * var(--catalog-spacing-m));scroll-padding-block-start:calc(var(--catalog-top-app-bar-height) + var(--catalog-top-app-bar-padding-block) * 2)}@media screen and (max-width:600px){:root{--catalog-display-xl-font-size:55px;--catalog-title-l-font-size:16px;--catalog-body-l-font-size:14px;--catalog-body-m-font-size:12px;--catalog-spacing-xl:16px;--catalog-spacing-l:12px}}strong{-webkit-font-smoothing:antialiased}body{margin:0;font-size:var(--catalog-body-l-font-size)}a{color:var(--md-sys-color-primary);text-decoration:none}a:focus-visible,a:hover{text-decoration:underline}nav-drawer md-list.nav md-list-item[href][selected]{background-color:var(--md-sys-color-surface-container-highest)}nav-drawer md-list.nav md-list-item::part(focus-ring){--md-focus-ring-shape:var(--catalog-shape-xl)}@media (forced-colors:active){nav-drawer md-list.nav md-list-item[href][selected]{border:4px double CanvasText}nav-drawer md-list.nav md-list-item[href]{border-radius:var(--catalog-shape-xl);border:1px solid CanvasText}}nav-drawer md-list.nav{--md-list-container-color: transparent;display:block;margin-inline:var(--catalog-spacing-m);min-width:unset}nav-drawer md-list.nav md-list-item[href]{margin-block:var(--catalog-spacing-m);display:block;--md-focus-ring-shape:var(--catalog-shape-xl);border-radius:var(--catalog-shape-xl)}nav-drawer md-list.nav md-item [slot=headline]{padding-block:2px}nav-drawer md-list.nav md-item:first-of-type{padding-block:0}nav-drawer md-list.nav md-item{font-size:var(--catalog-headline-s-font-size);padding-block-end:0}nav-drawer md-list.nav md-item+md-list-item[href]{margin-block-start:0}h1{font-size:var(--catalog-display-xl-font-size)}.toc ol{list-style-type:none;font-size:var(--catalog-body-m-font-size)}.toc>ol{padding:0}.toc>ol ol{list-style-type:circle;padding-inline-start:var(--catalog-spacing-xl)}.toc ol li{margin-block:var(--catalog-spacing-m)}</style><script>"use strict";(()=>{function a(n,t,o="material-theme"){let e=globalThis[o];e||(e=new CSSStyleSheet,globalThis[o]=e,n.adoptedStyleSheets.push(e));let l=t.match(/--md-sys-color-surface-container:(.+?);/)?.[1];l&&document.querySelector('meta[name="theme-color"]')?.setAttribute("content",l),e.replaceSync(t),localStorage.setItem(o,t)}var h=localStorage.getItem("material-theme");h&&a(document,h);})();</script><noscript><link rel="stylesheet" href="../../css/no-js.css"></noscript><style>body[dsd-pending] {
+        display: none;
+      }</style><noscript><style>body[dsd-pending] {
+          display: block !important;
+        }</style></noscript><link rel="stylesheet" href="../../css/md-layout.css"><link rel="stylesheet" href="../../css/syntax-highlight.css"></head><body dsd-pending><script>"use strict";(()=>{var d;function s(){var o;return d===void 0&&(d=!!(!((o=new DOMParser().parseFromString('<div><template shadowrootmode="open"></template></div>',"text/html",{includeShadowRoots:!0}).querySelector("div"))===null||o===void 0)&&o.shadowRoot)),d}var m=o=>o.parentElement===null,h=o=>o.tagName==="TEMPLATE",p=o=>o.nodeType===Node.ELEMENT_NODE;var i=o=>{var l;if(s())return;let r=[],e=o.firstElementChild;for(;e!==o&&e!==null;)if(h(e))r.push(e),e=e.content;else if(e.firstElementChild!==null)e=e.firstElementChild;else if(p(e)&&e.nextElementSibling!==null)e=e.nextElementSibling;else{let t;for(;e!==o&&e!==null;)if(m(e)){t=r.pop();let a=t.parentElement,n=t.getAttribute("shadowrootmode");if(e=t,n==="open"||n==="closed"){let f=t.hasAttribute("shadowrootdelegatesfocus");try{a.attachShadow({mode:n,delegatesFocus:f}).append(t.content)}catch{}}else t=void 0}else{let a=e.nextElementSibling;if(a!=null){e=a,t!==void 0&&t.parentElement.removeChild(t);break}let n=(l=e.parentElement)===null||l===void 0?void 0:l.nextElementSibling;if(n!=null){e=n,t!==void 0&&t.parentElement.removeChild(t);break}e=e.parentElement,t!==void 0&&(t.parentElement.removeChild(t),t=void 0)}}};HTMLTemplateElement.prototype.hasOwnProperty("shadowRoot")||i(document.body);document.body.removeAttribute("dsd-pending");})();</script><lit-island on:idle import="../../js/hydration-entrypoints/navigation.js"><nav-drawer   page-title="Material Theming" has-toc><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      --_drawer-width: var(--catalog-drawer-width, 300px);
+      /* When in wide mode inline start margin is handled by the sidebar */
+      --_pane-margin-inline-start: 0px;
+      --_pane-margin-inline-end: var(--catalog-spacing-l);
+      --_pane-margin-block-end: var(--catalog-spacing-l);
+      --_toc-pane-width: 250px;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    ::slotted(nav) {
+      list-style: none;
+    }
+
+    .body {
+      display: flex;
+      flex-grow: 1;
+    }
+
+    .spacer {
+      position: relative;
+      transition: min-width 0.5s cubic-bezier(0.3, 0, 0, 1);
+    }
+
+    .spacer,
+    aside {
+      min-width: var(--_drawer-width);
+      max-width: var(--_drawer-width);
+    }
+
+    .pane {
+      box-sizing: border-box;
+      overflow: auto;
+      width: 100%;
+      /* Explicit height to make overflow work */
+      height: calc(
+        100dvh - var(--catalog-top-app-bar-height) -
+          var(--_pane-margin-block-end)
+      );
+      background-color: var(--md-sys-color-surface);
+      border-radius: var(--catalog-shape-xl);
+    }
+
+    .pane,
+    .panes {
+      /* emphasized – duration matching render fn for sidebar */
+      transition: 0.5s cubic-bezier(0.3, 0, 0, 1);
+      transition-property: margin, height, border-radius, max-width, width;
+    }
+
+    .panes {
+      display: flex;
+      justify-content: start;
+      flex-direction: row-reverse;
+      gap: var(--_pane-margin-inline-end);
+      margin-inline: var(--_pane-margin-inline-start)
+        var(--_pane-margin-inline-end);
+      width: 100%;
+      max-width: calc(
+        100% - var(--_drawer-width) - var(--_pane-margin-inline-start) -
+          var(--_pane-margin-inline-end)
+      );
+    }
+
+    .pane.content-pane {
+      flex-grow: 1;
+    }
+
+    .pane.toc {
+      width: auto;
+      box-sizing: border-box;
+      width: var(--_toc-pane-width);
+    }
+
+    .toc .scroll-wrapper {
+      padding-inline: var(--catalog-spacing-xl);
+    }
+
+    .pane.toc p {
+      margin-block: 0;
+      font-size: var(--catalog-label-s-font-size);
+    }
+
+    .pane.toc h2 {
+      margin-block: var(--catalog-spacing-s) var(--catalog-spacing-m);
+      font-size: var(--catalog-headline-s-font-size);
+    }
+
+    .content {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+      padding-inline: var(--catalog-spacing-xl);
+      width: 100%;
+    }
+
+    .content slot {
+      display: block;
+      width: 100%;
+      max-width: min(100%, var(--_max-width));
+    }
+
+    aside {
+      transition: transform 0.5s cubic-bezier(0.3, 0, 0, 1);
+      position: fixed;
+      isolation: isolate;
+      inset: var(--catalog-top-app-bar-height) 0 0 0;
+      z-index: 12;
+      background-color: var(--md-sys-color-surface-container);
+      overflow: hidden;
+    }
+
+    .scroll-wrapper {
+      overflow-y: auto;
+      max-height: 100%;
+      border-radius: inherit;
+      box-sizing: border-box;
+    }
+
+    .pane .scroll-wrapper {
+      padding-block: var(--catalog-spacing-xl);
+    }
+
+    aside slot {
+      display: block;
+    }
+
+    .scrim {
+      background-color: rgba(0, 0, 0, 0.32);
+    }
+
+    @media (max-width: 900px) {
+      .pane.toc {
+        display: none;
+      }
+    }
+
+    @media (max-width: 1500px) {
+      .spacer {
+        min-width: 0px;
+      }
+
+      .panes {
+        max-width: calc(
+          100% - var(--_pane-margin-inline-start) -
+            var(--_pane-margin-inline-end)
+        );
+      }
+
+      .content {
+        max-width: 100vw;
+        padding-inline: var(--catalog-spacing-xl);
+      }
+
+      .scrim {
+        position: fixed;
+        inset: 0;
+      }
+
+      aside {
+        transition: unset;
+        transform: translateX(-100%);
+        border-radius: 0 var(--catalog-shape-xl) var(--catalog-shape-xl) 0;
+      }
+
+      :host {
+        --_pane-margin-inline-start: var(--catalog-spacing-xl);
+      }
+
+      .open aside {
+        transform: translateX(0);
+      }
+
+      aside slot {
+        opacity: 0;
+      }
+
+      .open aside slot {
+        opacity: 1;
+      }
+
+      .open .scrim {
+        inset: 0;
+        z-index: 11;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .pane {
+        border-end-start-radius: 0;
+        border-end-end-radius: 0;
+      }
+
+      :host {
+        --_pane-margin-block-end: 0px;
+        --_pane-margin-inline-start: 0px;
+        --_pane-margin-inline-end: 0px;
+      }
+    }
+
+    /* On desktop, make the scrollbars less blocky so you can see the border
+     * radius of the pane. On most mobile platforms, these scrollbars are hidden
+     * by default. It'll still unfortunately render on top of the border radius.
+     */
+    @media (pointer: fine) {
+      :host {
+        --_scrollbar-width: 8px;
+      }
+
+      .scroll-wrapper {
+        /* firefox */
+        scrollbar-color: var(--md-sys-color-primary) transparent;
+        scrollbar-width: thin;
+      }
+
+      .content {
+        /* adjust for the scrollbar width */
+        padding-inline-end: calc(
+          var(--catalog-spacing-xl) - var(--_scrollbar-width)
+        );
+      }
+
+      /* Chromium + Safari */
+      .scroll-wrapper::-webkit-scrollbar {
+        background-color: transparent;
+        width: var(--_scrollbar-width);
+      }
+
+      .scroll-wrapper::-webkit-scrollbar-thumb {
+        background-color: var(--md-sys-color-primary);
+        border-radius: calc(var(--_scrollbar-width) / 2);
+      }
+    }
+
+    @media (forced-colors: active) {
+      .pane {
+        border: 1px solid CanvasText;
+      }
+
+      @media (max-width: 1500px) {
+        aside {
+          box-sizing: border-box;
+          border: 1px solid CanvasText;
+        }
+
+        .scrim {
+          background-color: rgba(0, 0, 0, 0.75);
+        }
+      }
+
+      @media (pointer: fine) {
+        .scroll-wrapper {
+          /* firefox */
+          scrollbar-color: CanvasText transparent;
+        }
+
+        .scroll-wrapper::-webkit-scrollbar-thumb {
+          /* Chromium + Safari */
+          background-color: CanvasText;
+        }
+      }
+    }
+  </style><!--lit-part X3gi8Rdrjg4=-->
+      <div class="root">
+        <slot name="top-app-bar"></slot>
+        <!--lit-node 2--><div class="body  ">
+          <!--lit-node 3--><div class="spacer" >
+            <!--lit-part--><!--/lit-part-->
+            <!--lit-node 5--><aside
+              
+              >
+              <div class="scroll-wrapper">
+                <!--lit-node 7--><slot
+                  ></slot>
+              </div>
+            </aside>
+          </div>
+          <div class="panes">
+            <!--lit-part B+ukLbMMU5s=--> <!--lit-node 0--><div
+      class="pane toc"
+      >
+      <div class="scroll-wrapper">
+        <p>On this page:</p>
+        <h2><!--lit-part-->Material Theming<!--/lit-part--></h2>
+        <slot name="toc"></slot>
+      </div>
+    </div><!--/lit-part--><!--lit-part GKKwOiyVSkk=--> <!--lit-node 0--><div
+      class="pane content-pane"
+      >
+      <div class="scroll-wrapper">
+        <div class="content">
+          <slot name="app-content"></slot>
+        </div>
+      </div>
+    </div><!--/lit-part-->
+          </div>
+        </div>
+      </div>
+    <!--/lit-part--></template><top-app-bar   slot="top-app-bar" baseuri="/"><template shadowroot="open" shadowrootmode="open"><style>
+    :host,
+    header {
+      display: block;
+      height: var(--catalog-top-app-bar-height);
+    }
+
+    header {
+      position: fixed;
+      inset: 0 0 auto 0;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      padding: var(--catalog-spacing-m) var(--catalog-spacing-l);
+      background-color: var(--md-sys-color-surface-container);
+      color: var(--md-sys-color-on-surface);
+      z-index: 12;
+    }
+
+    .default-content {
+      width: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    md-icon-button:not(:defined) {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      visibility: visible;
+    }
+
+    md-icon-button * {
+      display: block;
+    }
+
+    a {
+      color: var(--md-sys-color-primary);
+      font-size: max(var(--catalog-title-l-font-size), 22px);
+      text-decoration: none;
+      padding-inline: 12px;
+      position: relative;
+      outline: none;
+      vertical-align: middle;
+    }
+
+    .start .menu-button {
+      display: none;
+    }
+
+    .start .home-button * {
+      color: var(--md-sys-color-primary);
+    }
+
+    .end {
+      flex-grow: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    #menu-island {
+      position: relative;
+    }
+
+    #skip-to-main {
+      padding: var(--catalog-spacing-s);
+      border-radius: var(--catalog-shape-m);
+      background-color: var(--md-sys-color-inverse-surface);
+      color: var(--md-sys-color-inverse-on-surface);
+      opacity: 0;
+      position: absolute;
+      pointer-events: none;
+    }
+
+    #skip-to-main:focus-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    @media (max-width: 1500px) {
+      .start .home-button {
+        display: none;
+      }
+
+      .start .menu-button {
+        display: flex;
+      }
+    }
+  </style><!--lit-part Fj0yidr0qdI=-->
+      <header>
+        <div class="default-content">
+          <section class="start">
+            <!--lit-node 3--><md-icon-button
+              
+              
+              
+              
+              
+              
+              
+               toggle class="menu-button" aria-label-selected="open navigation menu" aria-label="close navigation menu" aria-expanded="true" title="Open navigation menu" value selected defer-hydration>
+              <!--lit-node 4--><md-icon  slot="selected" defer-hydration>menu</md-icon>
+              <!--lit-node 5--><md-icon defer-hydration>menu_open</md-icon>
+            </md-icon-button>
+            <!--lit-node 6--><md-icon-button
+              
+              
+              
+               href="../../index.html" class="home-button" title="Home" aria-label="Home" value defer-hydration>
+              <!--lit-part Ks1jdFfDrwA=--> <svg
+  viewBox="0 96 960 960"
+  fill="currentColor">
+  <path
+    d="M480 1016q-91 0-171-34.5T169 887q-60-60-94.5-140T40 576q0-91 34.5-171T169 265q60-60 140-94.5T480 136q91 0 171 34.5T791 265q60 60 94.5 140T920 576q0 91-34.5 171T791 887q-60 60-140 94.5T480 1016ZM200 802V351q-38 47-59 104t-21 121q0 65 21 122t59 104Zm54-506h452q-47-38-104-59t-122-21q-65 0-122 21t-104 59Zm226 381 151-301H330l150 301Zm40 99h160V456L520 776Zm-240 0h160L280 456v320Zm200 160q64 0 121.5-21T706 856H254q47 38 104.5 59T480 936Zm280-134q38-47 59-104t21-122q0-64-21-121t-59-104v451Z" />
+</svg><!--/lit-part-->
+            </md-icon-button>
+          </section>
+
+          <a href="../../index.html" id="home-link">
+            Material Web
+            <!--lit-node 9--><md-focus-ring  for="home-link" defer-hydration></md-focus-ring>
+          </a>
+
+          <a id="skip-to-main" href="#main-content" tabindex="0">
+            Skip to main content
+          </a>
+
+          <section class="end">
+            <lit-island
+              on:interaction="pointerenter,focusin,pointerdown"
+              import="../../js/hydration-entrypoints/menu.js"
+              id="menu-island">
+              <!--lit-node 13--><md-icon-button
+                
+                
+                
+                 title="GitHub repository" aria-label="GitHub repository" href="https://github.com/material-components/material-web" target="_blank" value defer-hydration>
+                <!--lit-node 14--><md-icon defer-hydration>
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" />
+                  </svg>
+                </md-icon>
+              </md-icon-button>
+              <!--lit-node 17--><md-icon-button
+                
+                
+                
+                
+                
+                 id="theme-button" title="Page theme controls" aria-label="Page theme controls" aria-haspopup="dialog" aria-expanded="false" value defer-hydration>
+                <!--lit-node 18--><md-icon defer-hydration>palette</md-icon>
+              </md-icon-button>
+              <!--lit-node 19--><md-menu
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                 anchor="theme-button" menu-corner="start-end" anchor-corner="end-end" default-focus="none" role="dialog" aria-label="Page color theme controls" aria-hidden="true" defer-hydration>
+                <!--lit-node 20--><theme-changer defer-hydration><template shadowroot="open" shadowrootmode="open" shadowrootdelegatesfocus><style>
+    :host {
+      /* These are the default values, but we don't want the alignment to break
+       * in case the token values are updated.
+       */
+      --_copy-button-button-size: 40px;
+      --_copy-button-icon-size: 24px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      margin: var(--catalog-spacing-m) var(--catalog-spacing-l);
+    }
+
+    :host > * {
+      margin-block-end: var(--catalog-spacing-l);
+    }
+
+    :host > *:last-child {
+      margin-block-end: 0;
+    }
+
+    #head-wrapper {
+      display: flex;
+      align-items: space-between;
+    }
+
+    input {
+      border: none;
+      background: none;
+    }
+
+    .sliders,
+    #hex {
+      padding-inline: var(--catalog-spacing-m);
+      border-radius: var(--catalog-shape-l);
+      background-color: var(--md-sys-color-surface-variant);
+      color: var(--md-sys-color-on-surface-variant);
+
+      /* Default track color is inaccessible in a surface-variant */
+      --md-slider-inactive-track-color: var(--md-sys-color-on-surface-variant);
+    }
+
+    hct-slider {
+      display: block;
+      margin-block: 24px;
+    }
+
+    h2 {
+      margin: 0;
+      text-align: center;
+      position: relative;
+      height: var(--_copy-button-icon-size);
+    }
+
+    copy-code-button {
+      --md-icon-button-icon-size: var(--_copy-button-icon-size);
+      --md-icon-button-state-layer-width: var(--_copy-button-button-size);
+      --md-icon-button-state-layer-height: var(--_copy-button-button-size);
+      /*
+       * Center the copy icon with the h2 text
+       * -(icon button size - intrinsic icon size) / 2
+       */
+      --_inline-block-inset: calc(
+        -1 * (var(--_copy-button-button-size) - var(--_copy-button-icon-size)) /
+          2
+      );
+      --catalog-copy-code-button-inset: var(--_inline-block-inset) 0 auto auto;
+      position: static;
+    }
+
+    #hex {
+      display: flex;
+      padding: 12px;
+      align-items: center;
+    }
+
+    #hex .label {
+      flex-grow: 1;
+    }
+
+    #hex .input-wrapper {
+      box-sizing: border-box;
+      width: 48px;
+      height: 48px;
+      box-sizing: border-box;
+      border: 1px solid var(--md-sys-color-on-secondary-container);
+      position: relative;
+    }
+
+    #hex .input-wrapper,
+    #hex md-focus-ring {
+      border-radius: 50%;
+    }
+
+    .overflow {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: inherit;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #hex input {
+      min-width: 200%;
+      min-height: 200%;
+    }
+
+    @media (forced-colors: active) {
+      #hex,
+      .sliders {
+        box-sizing: border-box;
+        border: 1px solid CanvasText;
+      }
+    }
+  </style><!--lit-part dyrdQmZZfOI=-->
+      <div id="head-wrapper">
+        <h2> Theme Controls </h2>
+        <!--lit-node 2--><copy-code-button
+          
+          
+           button-title="Copy current theme to clipboard" label="Copy current theme" defer-hydration><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy current theme to clipboard" aria-label="Copy current theme" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template>
+        </copy-code-button>
+      </div>
+      <!--lit-part 0ghsY0VNeps=--><div>
+      <label id="hex" for="color-input">
+        <span class="label">Hex Source Color</span>
+        <span class="input-wrapper">
+          <div class="overflow">
+            <!--lit-node 5--><input
+              id="color-input"
+              
+              type="color"
+              value="" />
+          </div>
+          <!--lit-node 6--><md-focus-ring  for="color-input" defer-hydration></md-focus-ring>
+        </span>
+      </label>
+    </div><!--/lit-part--> <!--lit-part sZFuVs4AeBA=--><div class="sliders">
+      <!--lit-node 1--><hct-slider
+        
+        
+        
+        
+         type="hue" label="Hue" max="360" defer-hydration><template shadowroot="open" shadowrootmode="open"><style>
+    section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #gradient {
+      height: 24px;
+      border-radius: 12px;
+      border: 1px solid currentColor;
+      box-sizing: border-box;
+    }
+
+    #gradient.chroma {
+      will-change: background;
+    }
+
+    #label,
+    #gradient {
+      margin-inline: calc(var(--md-slider-handle-width, 20px) / 2);
+    }
+  </style><!--lit-part FctZnwwg2bY=--><section>
+      <span id="label" class="color-on-surface-text"><!--lit-part-->Hue<!--/lit-part--></span>
+      <!--lit-node 3--><md-slider
+        
+        
+        
+        
+        
+        
+         id="source" labeled aria-label="Hue" defer-hydration></md-slider>
+      <!--lit-node 4--><div
+        id="gradient"
+        class="hue"
+        style="background:linear-gradient(to right, #e7007d 0%, #e90070 1%, #ea0064 2%, #eb0057 3%, #ec044a 4%, #ec0e3d 5%, #eb162f 6%, #ea1c1f 7%, #e92207 8%, #e03400 9%, #d84200 10%, #d04b00 11%, #ca5100 12%, #c45600 13%, #bf5b00 14%, #ba5e00 15%, #b56100 16%, #b16400 17%, #ad6600 18%, #a96800 19%, #a56a00 20%, #a26c00 21%, #9e6e00 22%, #9b7000 23%, #977100 24%, #937300 25%, #907400 26%, #8c7600 27%, #887700 28%, #847800 29%, #7f7a00 30%, #7a7b00 31%, #757d00 32%, #6f7e00 33%, #698000 34%, #618200 35%, #588300 36%, #4c8500 37%, #3d8700 38%, #238a00 39%, #008b18 40%, #008a2f 41%, #008a3d 42%, #008948 43%, #008951 44%, #008858 45%, #00885f 46%, #008865 47%, #00876a 48%, #00876f 49%, #008673 50%, #008677 51%, #00867b 52%, #00857f 53%, #008583 54%, #008586 55%, #00848a 56%, #00848d 57%, #008491 58%, #008394 59%, #008398 60%, #00829c 61%, #00829f 62%, #0081a3 63%, #0081a7 64%, #0080ac 65%, #007fb1 66%, #007fb6 67%, #007ebb 68%, #007dc1 69%, #007bc8 70%, #007ad0 71%, #0078da 72%, #0075e5 73%, #0072f2 74%, #126eff 75%, #326bff 76%, #4568ff 77%, #5365ff 78%, #5f62ff 79%, #695fff 80%, #735bff 81%, #7d57ff 82%, #8653ff 83%, #8e4eff 84%, #9748ff 85%, #a040ff 86%, #aa37ff 87%, #b329ff 88%, #be0dff 89%, #c400f6 90%, #ca00ea 91%, #ce00de 92%, #d300d2 93%, #d600c6 94%, #da00ba 95%, #dd00ad 96%, #e000a1 97%, #e20095 98%, #e50089 99%);"></div>
+    </section><!--/lit-part--></template></hct-slider>
+      <!--lit-node 2--><hct-slider
+        
+        
+        
+        
+        
+         type="chroma" label="Chroma" max="150" defer-hydration><template shadowroot="open" shadowrootmode="open"><style>
+    section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #gradient {
+      height: 24px;
+      border-radius: 12px;
+      border: 1px solid currentColor;
+      box-sizing: border-box;
+    }
+
+    #gradient.chroma {
+      will-change: background;
+    }
+
+    #label,
+    #gradient {
+      margin-inline: calc(var(--md-slider-handle-width, 20px) / 2);
+    }
+  </style><!--lit-part FctZnwwg2bY=--><section>
+      <span id="label" class="color-on-surface-text"><!--lit-part-->Chroma<!--/lit-part--></span>
+      <!--lit-node 3--><md-slider
+        
+        
+        
+        
+        
+        
+         id="source" labeled aria-label="Chroma" defer-hydration></md-slider>
+      <!--lit-node 4--><div
+        id="gradient"
+        class="chroma"
+        style="background:linear-gradient(to right, #777777 0%, #7a7676 1%, #7c7576 2%, #7e7576 3%, #807476 4%, #837377 5%, #857277 6%, #877277 7%, #897177 8%, #8b7077 9%, #8d6f77 10%, #8f6e77 11%, #916d77 12%, #936d78 13%, #956c78 14%, #976b78 15%, #996a78 16%, #9b6978 17%, #9d6878 18%, #9f6778 19%, #a16678 20%, #a36578 21%, #a56479 22%, #a76379 23%, #a86279 24%, #aa6179 25%, #ac5f79 26%, #ae5e79 27%, #b05d79 28%, #b15c79 29%, #b35b79 30%, #b55a7a 31%, #b6587a 32%, #b8577a 33%, #ba567a 34%, #bb547a 35%, #bd537a 36%, #bf527a 37%, #c0507a 38%, #c24f7a 39%, #c44d7a 40%, #c54c7b 41%, #c74a7b 42%, #c8487b 43%, #ca477b 44%, #cb457b 45%, #cd437b 46%, #ce417b 47%, #d03f7b 48%, #d13d7b 49%, #d33b7b 50%, #d4397c 51%, #d6377c 52%, #d7347c 53%, #d9327c 54%, #da2f7c 55%, #dc2c7c 56%, #dd297c 57%, #de267c 58%, #e0227c 59%, #e11e7c 60%, #e21a7c 61%, #e4147c 62%, #e50c7d 63%, #e6027d 64%, #e7007d 65%, #e7007d 66%, #e7007d 67%, #e7007d 68%, #e7007d 69%, #e7007d 70%, #e7007d 71%, #e7007d 72%, #e7007d 73%, #e7007d 74%, #e7007d 75%, #e7007d 76%, #e7007d 77%, #e7007d 78%, #e7007d 79%, #e7007d 80%, #e7007d 81%, #e7007d 82%, #e7007d 83%, #e7007d 84%, #e7007d 85%, #e7007d 86%, #e7007d 87%, #e7007d 88%, #e7007d 89%, #e7007d 90%, #e7007d 91%, #e7007d 92%, #e7007d 93%, #e7007d 94%, #e7007d 95%, #e7007d 96%, #e7007d 97%, #e7007d 98%, #e7007d 99%);"></div>
+    </section><!--/lit-part--></template></hct-slider>
+      <!--lit-node 3--><hct-slider
+        
+        
+        
+        
+         type="tone" label="Tone" max="100" defer-hydration><template shadowroot="open" shadowrootmode="open"><style>
+    section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    #gradient {
+      height: 24px;
+      border-radius: 12px;
+      border: 1px solid currentColor;
+      box-sizing: border-box;
+    }
+
+    #gradient.chroma {
+      will-change: background;
+    }
+
+    #label,
+    #gradient {
+      margin-inline: calc(var(--md-slider-handle-width, 20px) / 2);
+    }
+  </style><!--lit-part FctZnwwg2bY=--><section>
+      <span id="label" class="color-on-surface-text"><!--lit-part-->Tone<!--/lit-part--></span>
+      <!--lit-node 3--><md-slider
+        
+        
+        
+        
+        
+        
+         id="source" labeled aria-label="Tone" defer-hydration></md-slider>
+      <!--lit-node 4--><div
+        id="gradient"
+        class="tone"
+        style="background:linear-gradient(to right, #000000 0%, #040404 1%, #070707 2%, #0b0b0b 3%, #0e0e0e 4%, #111111 5%, #131313 6%, #151515 7%, #181818 8%, #191919 9%, #1b1b1b 10%, #1d1d1d 11%, #1f1f1f 12%, #222222 13%, #242424 14%, #262626 15%, #282828 16%, #2a2a2a 17%, #2c2c2c 18%, #2e2e2e 19%, #303030 20%, #323232 21%, #353535 22%, #373737 23%, #393939 24%, #3b3b3b 25%, #3e3e3e 26%, #404040 27%, #424242 28%, #444444 29%, #474747 30%, #494949 31%, #4b4b4b 32%, #4e4e4e 33%, #505050 34%, #525252 35%, #555555 36%, #575757 37%, #595959 38%, #5c5c5c 39%, #5e5e5e 40%, #616161 41%, #636363 42%, #666666 43%, #686868 44%, #6a6a6a 45%, #6d6d6d 46%, #6f6f6f 47%, #727272 48%, #747474 49%, #777777 50%, #797979 51%, #7c7c7c 52%, #7f7f7f 53%, #818181 54%, #848484 55%, #868686 56%, #898989 57%, #8b8b8b 58%, #8e8e8e 59%, #919191 60%, #939393 61%, #969696 62%, #989898 63%, #9b9b9b 64%, #9e9e9e 65%, #a0a0a0 66%, #a3a3a3 67%, #a6a6a6 68%, #a8a8a8 69%, #ababab 70%, #aeaeae 71%, #b0b0b0 72%, #b3b3b3 73%, #b6b6b6 74%, #b9b9b9 75%, #bbbbbb 76%, #bebebe 77%, #c1c1c1 78%, #c4c4c4 79%, #c6c6c6 80%, #c9c9c9 81%, #cccccc 82%, #cfcfcf 83%, #d1d1d1 84%, #d4d4d4 85%, #d7d7d7 86%, #dadada 87%, #dddddd 88%, #dfdfdf 89%, #e2e2e2 90%, #e5e5e5 91%, #e8e8e8 92%, #ebebeb 93%, #eeeeee 94%, #f1f1f1 95%, #f3f3f3 96%, #f6f6f6 97%, #f9f9f9 98%, #fcfcfc 99%);"></div>
+    </section><!--/lit-part--></template></hct-slider>
+    </div><!--/lit-part-->
+      <!--lit-part LG/Om1Z9ONk=--><!--lit-node 0--><md-outlined-segmented-button-set
+      
+       aria-label="Color mode" defer-hydration>
+      <!--lit-part FgtifS1FxdE=--><!--lit-node 0--><md-outlined-segmented-button
+      
+      
+      
+       data-value="dark" title="dark" aria-label="dark color scheme" defer-hydration>
+      <!--lit-node 1--><md-icon  slot="icon" defer-hydration><!--lit-part-->dark_mode<!--/lit-part--></md-icon>
+    </md-outlined-segmented-button><!--/lit-part-->
+      <!--lit-part FgtifS1FxdE=--><!--lit-node 0--><md-outlined-segmented-button
+      
+      
+      
+       data-value="auto" title="auto" aria-label="auto color scheme" defer-hydration>
+      <!--lit-node 1--><md-icon  slot="icon" defer-hydration><!--lit-part-->brightness_medium<!--/lit-part--></md-icon>
+    </md-outlined-segmented-button><!--/lit-part-->
+      <!--lit-part FgtifS1FxdE=--><!--lit-node 0--><md-outlined-segmented-button
+      
+      
+      
+       data-value="light" title="light" aria-label="light color scheme" defer-hydration>
+      <!--lit-node 1--><md-icon  slot="icon" defer-hydration><!--lit-part-->light_mode<!--/lit-part--></md-icon>
+    </md-outlined-segmented-button><!--/lit-part-->
+    </md-outlined-segmented-button-set><!--/lit-part-->
+    <!--/lit-part--></template></theme-changer>
+              </md-menu>
+            </lit-island>
+          </section>
+        </div>
+        <slot></slot>
+      </header>
+    <!--/lit-part--></template></top-app-bar><section slot="toc"><div class="toc"><ol><li><a href="#tokens">Tokens</a><ol><li><a href="#reference">Reference</a><ol><li><a href="#typeface">Typeface</a></li><li><a href="#palette">Palette</a></li></ol></li><li><a href="#system">System</a><ol><li><a href="#color">Color</a></li><li><a href="#typography">Typography</a></li><li><a href="#shape">Shape</a></li><li><a href="#motion">Motion</a></li></ol></li><li><a href="#component">Component</a></li></ol></li></ol></div></section><main id="main-content" slot="app-content" tabindex="0"><html><head></head><body><h1>Theming</h1><p><a href="https://m3.material.io/foundations/customization">Material Design theming</a> creates unique branded products with familiar patterns and accessible interactions.</p><p><img src="../images/theming.webp" alt="collage of views of a mobile UI that show a user's setting and preference for
+a green primary color flows through system UI
+harmoniously" title="A user-generated color scheme can flow through apps that use a custom theme."></p><div class="heading h2"><h2 id="tokens" tabindex="-1">Tokens</h2><a class="anchor" href="#tokens"><span class="offscreen">Link to “Tokens”</span> <span aria-hidden="true">#</span></a></div><p>Material is expressed in <a href="https://m3.material.io/foundations/design-tokens/overview">design tokens</a>, which are the building blocks of all UI elements.</p><p>Each component token maps to a system token, which has a concrete reference value.</p><p><img src="../images/token-types.webp" alt="A diagram showing the heirachy of component tokens to system tokens to
+reference
+tokens" title="The relationship between reference, system, and component tokens."></p><p>On the web, design tokens are <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/--*">CSS custom properties</a> and can be scoped with CSS selectors.</p><lit-island import="../../js/hydration-entrypoints/copy-code-button.js" on:interaction="focusin,pointerenter,touchstart"><copy-code-button><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy code" aria-label="Copy code" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template><pre class="language-css"><code class="language-css"><span class="token selector">.square-buttons</span> <span class="token punctuation">{</span>
+  <span class="token comment">/* Changes all &lt;md-filled-button&gt; instances matching the selector */</span>
+  <span class="token property">--md-filled-button-container-shape</span><span class="token punctuation">:</span> 0px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></copy-code-button></lit-island><div class="heading h3"><h3 id="reference" tabindex="-1">Reference</h3><a class="anchor" href="#reference"><span class="offscreen">Link to “Reference”</span> <span aria-hidden="true">#</span></a></div><p>Reference tokens hold concrete values, such as a hex color, pixel size, or font family name.</p><div class="heading h4"><h4 id="typeface" tabindex="-1">Typeface</h4><a class="anchor" href="#typeface"><span class="offscreen">Link to “Typeface”</span> <span aria-hidden="true">#</span></a></div><p><a href="../../theming/typography/#typeface"><code>--md-ref-typeface</code> tokens</a> can be used to change font families and weights across all system and component tokens.</p><lit-island import="../../js/hydration-entrypoints/copy-code-button.js" on:interaction="focusin,pointerenter,touchstart"><copy-code-button><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy code" aria-label="Copy code" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template><pre class="language-css"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--md-ref-typeface-brand</span><span class="token punctuation">:</span> <span class="token string">'Open Sans'</span><span class="token punctuation">;</span>
+  <span class="token property">--md-ref-typeface-plain</span><span class="token punctuation">:</span> <span class="token string">'Open Sans'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></copy-code-button></lit-island><div class="heading h4"><h4 id="palette" tabindex="-1">Palette</h4><a class="anchor" href="#palette"><span class="offscreen">Link to “Palette”</span> <span aria-hidden="true">#</span></a></div><p><em>MWC does not currently support <code>--md-ref-palette</code> tokens.</em></p><div class="heading h3"><h3 id="system" tabindex="-1">System</h3><a class="anchor" href="#system"><span class="offscreen">Link to “System”</span> <span aria-hidden="true">#</span></a></div><p>System tokens define decisions and roles that give the design system its character, from color and typography, to elevation and shape.</p><div class="heading h4"><h4 id="color" tabindex="-1">Color</h4><a class="anchor" href="#color"><span class="offscreen">Link to “Color”</span> <span aria-hidden="true">#</span></a></div><p><a href="../../theming/color/#tokens"><code>--md-sys-color</code> tokens</a> define dynamic color roles that map to components. See the <a href="../../theming/color/index.html">color guide</a> for more details.</p><lit-island import="../../js/hydration-entrypoints/copy-code-button.js" on:interaction="focusin,pointerenter,touchstart"><copy-code-button><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy code" aria-label="Copy code" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template><pre class="language-css"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--md-sys-color-primary</span><span class="token punctuation">:</span> red<span class="token punctuation">;</span>
+  <span class="token property">--md-sys-color-secondary</span><span class="token punctuation">:</span> blue<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></copy-code-button></lit-island><div class="heading h4"><h4 id="typography" tabindex="-1">Typography</h4><a class="anchor" href="#typography"><span class="offscreen">Link to “Typography”</span> <span aria-hidden="true">#</span></a></div><p><a href="../../theming/typography/#typescale"><code>--md-sys-typescale</code> tokens</a> define typescale roles that map to components. See the <a href="../../theming/typography/index.html">typography guide</a> for more details.</p><lit-island import="../../js/hydration-entrypoints/copy-code-button.js" on:interaction="focusin,pointerenter,touchstart"><copy-code-button><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy code" aria-label="Copy code" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template><pre class="language-css"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--md-sys-typescale-body-medium-size</span><span class="token punctuation">:</span> 1rem<span class="token punctuation">;</span>
+  <span class="token property">--md-sys-typescale-body-medium-line-height</span><span class="token punctuation">:</span> 1.5rem<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></copy-code-button></lit-island><div class="heading h4"><h4 id="shape" tabindex="-1">Shape</h4><a class="anchor" href="#shape"><span class="offscreen">Link to “Shape”</span> <span aria-hidden="true">#</span></a></div><p><a href="shape/#tokens"><code>--md-sys-shape</code> tokens</a> define corner shapes used in components. See the <a href="shape/index.html">shape guide</a> for more details.</p><lit-island import="../../js/hydration-entrypoints/copy-code-button.js" on:interaction="focusin,pointerenter,touchstart"><copy-code-button><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy code" aria-label="Copy code" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template><pre class="language-css"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--md-sys-shape-corner-small</span><span class="token punctuation">:</span> 4px<span class="token punctuation">;</span>
+  <span class="token property">--md-sys-shape-corner-medium</span><span class="token punctuation">:</span> 6px<span class="token punctuation">;</span>
+  <span class="token property">--md-sys-shape-corner-large</span><span class="token punctuation">:</span> 8px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></copy-code-button></lit-island><div class="heading h4"><h4 id="motion" tabindex="-1">Motion</h4><a class="anchor" href="#motion"><span class="offscreen">Link to “Motion”</span> <span aria-hidden="true">#</span></a></div><p><em>MWC does not currently support <code>--md-sys-motion</code> tokens.</em></p><div class="heading h3"><h3 id="component" tabindex="-1">Component</h3><a class="anchor" href="#component"><span class="offscreen">Link to “Component”</span> <span aria-hidden="true">#</span></a></div><p>Component tokens are design attributes assigned to elements. They can be system tokens or concrete values.</p><lit-island import="../../js/hydration-entrypoints/copy-code-button.js" on:interaction="focusin,pointerenter,touchstart"><copy-code-button><template shadowroot="open" shadowrootmode="open"><style>
+    :host {
+      display: block;
+      position: relative;
+      --_border-radius: calc(var(--catalog-code-block-border-radius) / 4);
+    }
+
+    md-icon-button {
+      color: red;
+      position: absolute;
+      inset: var(
+        --catalog-copy-code-button-inset,
+        var(--_border-radius) var(--_border-radius) auto auto
+      );
+      --md-sys-color-on-surface-variant: var(--md-sys-color-on-surface);
+      --md-sys-color-primary: var(--md-sys-color-on-surface);
+    }
+  </style><!--lit-part QD79OaZjHPk=-->
+      <slot></slot>
+      <!--lit-node 1--><md-icon-button
+        
+        
+        
+        
+        
+        
+         toggle title="Copy code" aria-label="Copy code" aria-label-selected="Copy successful" value defer-hydration>
+        <!--lit-node 2--><md-icon defer-hydration>content_copy</md-icon>
+        <!--lit-node 3--><md-icon  slot="selected" defer-hydration>check</md-icon>
+      </md-icon-button>
+    <!--/lit-part--></template><pre class="language-css"><code class="language-css"><span class="token selector">:root</span> <span class="token punctuation">{</span>
+  <span class="token property">--md-filled-button-container-shape</span><span class="token punctuation">:</span> 0px<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token selector">md-filled-button.error</span> <span class="token punctuation">{</span>
+  <span class="token property">--md-filled-button-container-color</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--md-sys-color-error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token property">--md-filled-button-label-text-color</span><span class="token punctuation">:</span> <span class="token function">var</span><span class="token punctuation">(</span>--md-sys-color-on-error<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span></code></pre></copy-code-button></lit-island><p>Refer to each <a href="../components/index.html">components' documentation</a> for available tokens.</p><blockquote class="note"><div class="icon"><md-icon>bookmark</md-icon></div><div class="content"><p>unlike --md-ref-* and --md-sys-* tokens, which are prefixed with ref and sys, component tokens are not prefixed with comp.</p></div></blockquote></body></html></main><md-list    aria-label="List of pages and components" role="menubar" class="nav"><md-item><div slot="headline">About</div></md-item><md-list-item     href="../../about/intro/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Introduction</md-list-item><md-list-item     href="../../about/quick-start/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Quick Start</md-list-item><md-list-item     href="../../about/roadmap/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Roadmap</md-list-item><md-list-item     href="../../about/support/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Support</md-list-item><md-list-item     href="../../about/size/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Bundle Sizes</md-list-item><md-divider  role="separator"></md-divider><md-item><div slot="headline">Theming</div></md-item><md-list-item    type="link"  href="../../theming/material-theming/index.html" type="link" selected="selected" tabindex="0" md-list-item>Material Theming</md-list-item><md-list-item   type="link"  href="../../theming/color/index.html" type="link" tabindex="-1" md-list-item>Color</md-list-item><md-list-item   type="link"  href="../../theming/typography/index.html" type="link" tabindex="-1" md-list-item>Typography</md-list-item><md-list-item   type="link"  href="../../theming/shape/index.html" type="link" tabindex="-1" md-list-item>Shape</md-list-item><md-divider  role="separator"></md-divider><md-item><div slot="headline">Components</div></md-item><md-list-item     href="../../components/button/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Buttons</md-list-item><md-list-item     href="../../components/checkbox/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Checkbox</md-list-item><md-list-item     href="../../components/chip/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Chips</md-list-item><md-list-item     href="../../components/dialog/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Dialogs</md-list-item><md-list-item     href="../../components/fab/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Floating action button (FAB)</md-list-item><md-list-item     href="../../components/icon-button/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Icon Buttons</md-list-item><md-list-item     href="../../components/list/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Lists</md-list-item><md-list-item     href="../../components/menu/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Menus</md-list-item><md-list-item     href="../../components/progress/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Progress indicators</md-list-item><md-list-item     href="../../components/radio/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Radio</md-list-item><md-list-item     href="../../components/ripple/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Ripple</md-list-item><md-list-item     href="../../components/select/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Select</md-list-item><md-list-item     href="../../components/slider/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Sliders</md-list-item><md-list-item     href="../../components/switch/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Switch</md-list-item><md-list-item     href="../../components/tabs/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Tabs</md-list-item><md-list-item     href="../../components/text-field/index.html" role="menuitem" type="link" tabindex="-1" md-list-item>Text field</md-list-item></md-list></nav-drawer></lit-island><script>/* file:// nav-drawer fallback: opens the drawer without JS hydration */
+(function(){
+  function wire(){
+    if(window.customElements&&customElements.get('nav-drawer'))return; /* hydrated: native handles it */
+    var nav=document.querySelector('nav-drawer');
+    if(!nav||!nav.shadowRoot)return;
+    var body=nav.shadowRoot.querySelector('.body');
+    var bar=nav.querySelector('top-app-bar');
+    var btn=bar&&bar.shadowRoot&&bar.shadowRoot.querySelector('.menu-button');
+    if(!body||!btn||btn.__navWired)return;
+    btn.__navWired=true;
+    var scrim=document.createElement('div');
+    scrim.style.cssText='position:fixed;inset:0;z-index:11;background:rgba(0,0,0,.32);display:none';
+    nav.shadowRoot.appendChild(scrim);
+    function set(open){
+      body.classList.toggle('open',open);
+      scrim.style.display=open?'block':'none';
+      try{open?btn.setAttribute('selected',''):btn.removeAttribute('selected');}catch(e){}
+    }
+    btn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();set(!body.classList.contains('open'));});
+    scrim.addEventListener('click',function(){set(false);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false);});
+    nav.addEventListener('click',function(e){(e.composedPath()||[]).forEach(function(n){if(n.tagName==='A')set(false);});});
+  }/* Wire as soon as the (declarative) shadow roots exist instead of after a fixed
+     delay. The old setTimeout(wire,1200) meant a click within 1.2s of page load did
+     nothing, so every page after the first needed two clicks. Poll briefly until wired. */
+  function tryWire(n){
+    wire();
+    var nav=document.querySelector('nav-drawer');
+    var bar=nav&&nav.querySelector('top-app-bar');
+    var btn=bar&&bar.shadowRoot&&bar.shadowRoot.querySelector('.menu-button');
+    if((!btn||!btn.__navWired)&&n>0){ setTimeout(function(){tryWire(n-1);},50); }
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded',function(){tryWire(80);}); } else { tryWire(80); }
+  window.addEventListener('pageshow',function(){ tryWire(80); });
+})();
+</script>
+</body></html>
